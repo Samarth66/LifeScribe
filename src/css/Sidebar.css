@@ -1,0 +1,18 @@
+.name {
+  padding: 5px;
+  text-align: center;
+}
+
+.searchBox {
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 40px;
+  height: 27px;
+  margin-bottom: 5px;
+}
+.newEntry {
+  width: 100%;
+  border: none;
+  height: 45px;
+  background-color: burlywood;
+}

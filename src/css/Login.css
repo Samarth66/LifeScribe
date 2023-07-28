@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  box-sizing: border-box;
+  font-family: Georgia, "Times New Roman", Times, serif;
+
+  width: 100%;
+  padding: 20px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 2rem;
+  color: white;
+}
+
+.navigation a {
+  position: relative;
+  font-size: 1.3 em;
+  text-decoration: none;
+  margin-left: 20px;
+  color: white;
+  font-weight: 300;
+}
+
+.navigation a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 5px;
+  left: 0;
+  bottom: -6px;
+  transform: scaleX(0);
+  transition: 0.5s;
+}
+
+body {
+  background-color: #00203fff;
+}
+
+.navigation a:hover::after {
+  transform: scaleX(1);
+}
+.navigation .loginButton {
+  width: 80px;
+  height: 40px;
+  margin-left: 20px;
+  background: transparent;
+  border: 2px solid;
+  outline: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 1.1em;
+  font-weight: 300;
+  transition: 0.5s;
+}
+
+.navigation .loginButton:hover {
+  background: white;
+  color: black;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 100px;
+  width: 100%; /* Set the container width to 100% of the available space */
+}
+
+.leftContainer {
+  /* Allow the left container to grow and take available space */
+  padding: 2rem;
+  max-width: 50%; /* Set the maximum width of the left container to 50% */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.rightContainer {
+  /* Allow the right container to grow and take available space */
+  padding: 2rem;
+  max-width: 50%; /* Set the maximum width of the right container to 50% */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+.form {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  padding: 20px;
+  height: 300px;
+  border-radius: 15px;
+  align-items: center;
+  margin-right: 100px;
+}
+
+.formInput {
+  border: none;
+  border-bottom: 1px solid black; /* You can adjust the color and size as needed */
+}
+
+.log {
+  padding-bottom: 30px;
+}
+
+.submitButton {
+  padding: 10px 30px 10px 30px;
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+  border: 2px solid;
+  outline: none;
+  border-radius: 40px;
+  color: white;
+  background-color: #00203fff;
+  font-size: 1.1em;
+  font-weight: 300;
+  transition: 0.5s;
+}
+
+.submitButton:hover {
+  color: #00203fff;
+  background-color: white;
+}
+
+.heading {
+  color: green;
+
+  margin-left: 100px;
+  font-size: 40px;
+}
+
+.heading1 {
+  color: green;
+
+  margin-left: 100px;
+}
