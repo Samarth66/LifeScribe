@@ -33,13 +33,14 @@ router.get("/selected-journal-entry", async (req, res) => {
 });
 
 router.put("/journal-update", async (req, res) => {
-  const { journalId, updatedJournalDescription } = req.body;
+  const { journalId, updatedJournalDescription, updatedJournalTitle } =
+    req.body;
   console.log("got values?", journalId, updatedJournalDescription);
 
   try {
     await journalDetail.findOneAndUpdate(
       { _id: journalId },
-      { description: updatedJournalDescription }
+      { description: updatedJournalDescription, title: updatedJournalTitle }
     );
   } catch (e) {
     console.log("Cannot update the function new journal in database", e);

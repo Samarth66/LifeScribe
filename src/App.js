@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Journal from "./pages/Journal";
+import GoalTracker from "./pages/goalTracker/GoalTracker";
+
 const App = () => {
   useEffect(() => {
     const socket = io("http://localhost:8000");
@@ -46,6 +48,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/goal" element={<GoalTracker />} />
         </Routes>
       </Router>
     </div>

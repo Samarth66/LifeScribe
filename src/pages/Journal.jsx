@@ -106,6 +106,7 @@ const Journal = () => {
         await axios.put("http://localhost:8000/journal-update", {
           journalId: selectedJournalDetails.id,
           updatedJournalDescription: description,
+          updatedJournalTitle: title,
         });
       } catch (e) {
         console.log("unable to update", e);
