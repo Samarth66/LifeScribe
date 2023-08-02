@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import "../css/Sidebar.css";
 import JournalEntry from "./JournalEntry";
+import SidebarTitles from "./SidebarTitles";
+import { useDispatch, useSelector } from "react-redux";
 
-const Sidebar = (props) => {
-  console.log("props", props.userid);
-
+const Sidebar = ({ onClearData }) => {
   const [sideEntries, setSideEntries] = useState([]);
+  const journalEntries = useSelector((state) => state.journal.journalEntries);
 
-  useEffect(() => {});
+  const userDetails = useSelector((state) => state.userDetails.userDetails);
 
+  const handleNewEntryClick = () => {
+    onClearData(); // Correctly calls the onClearData prop from the parent component
+  };
   return (
-    <div>
-      <div className="Sidebar">
-        <p className="name">Name </p>
-        <input type="search" className="searchBox" />
-        <br />
-        <button className="newEntry">New Entry</button>
-        <h3>sidebar</h3>
+    <div className="sidebar">
+      <p className="name">
+        {userDetails.name.charAt(0).toUpperCase() +
+          userDetails.name.slice(1).toLowerCase()}
+        's Journal
+      </p>
+
+      <input type="search" className="titleSearch" />
+      <br />
+      <button className="newEntry" onClick={handleNewEntryClick}>
+        New Entry
+      </button>
+      <div className="journalEntr">
+        {journalEntries.map((entry) => (
+          <SidebarTitles title={entry.title} date={entry.date} id={entry._id} />
+        ))}
       </div>
     </div>
   );

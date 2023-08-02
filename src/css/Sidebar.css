@@ -1,18 +1,36 @@
+.sidebar {
+  background-color: #38598b;
+  height: 100vh;
+  display: flex;
+
+  width: 100%;
+  margin-top: 55px;
+  flex-direction: column;
+}
+
 .name {
   padding: 5px;
   text-align: center;
 }
 
-.searchBox {
-  margin-left: 10px;
-  margin-right: 10px;
-  border-radius: 40px;
+.titleSearch {
+  margin: 0px;
+  border-radius: 30px;
   height: 27px;
-  margin-bottom: 5px;
+  width: 100%;
 }
 .newEntry {
   width: 100%;
   border: none;
   height: 45px;
-  background-color: burlywood;
+  background-color: #a2a8d3;
+}
+
+.newEntry:hover {
+  background-color: aliceblue;
+}
+
+.journalSidebar {
+  width: 15%;
+  min-width: 128px;
 }

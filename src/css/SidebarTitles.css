@@ -1,0 +1,32 @@
+.sidebarTitles {
+  display: flex;
+  flex-direction: column;
+
+  padding: 9px;
+  height: 50px;
+  width: 100%;
+}
+.sidebarBlock {
+  display: flex;
+  background-color: #a2a8d3;
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  justify-content: center;
+}
+.title {
+  font-weight: bold;
+  cursor: auto !important;
+}
+
+.date {
+  font-size: 12px;
+  text-align: end;
+}
+
+.threeDots {
+  margin-top: 13.2px;
+}
+
+.sidebarBlock:hover {
+  background-color: aliceblue;
+}

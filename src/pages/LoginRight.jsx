@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/Login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
 
 const LoginRight = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const userDetails = useSelector((state) => state.userDetails.userDetails);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(userDetails);
+  }, [userDetails]);
 
   const history = useNavigate();
 
@@ -23,6 +30,11 @@ const LoginRight = () => {
           const resData = res.data;
           console.log(resData.status);
           if (resData.status == "exist") {
+            const userData = {
+              id: resData.id,
+              name: resData.name,
+            };
+            dispatch({ type: "SET_USER_DETAILS", payload: userData });
             history("/journal", {
               state: { name: resData.name, id: resData.id },
             });

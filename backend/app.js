@@ -26,10 +26,12 @@ io.on("connection", (socket) => {
 const userRoutes = require("./routes/login");
 const signupRoutes = require("./routes/signup");
 const journalRoutes = require("./routes/journal");
+const journalEntriesRoutes = require("./routes/journalEntries");
 
 app.use(userRoutes);
 app.use("/", signupRoutes);
 app.use("/", journalRoutes(io));
+app.use("/", journalEntriesRoutes);
 
 const PORT = 8000;
 server.listen(PORT, () => {

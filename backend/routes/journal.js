@@ -23,9 +23,10 @@ function journalRoutes(io) {
     };
 
     try {
-      await journalDetail.insertMany([data]);
+      const newEntry = await journalDetail.insertMany([data]);
       io.emit("newEntry", data); // Use the 'io' object to emit the event
-      res.status(201).json({ message: "Entry added successfully" });
+      console.log("entry added", newEntry[0]._id);
+      res.json(newEntry);
     } catch {
       console.log("error in adding data");
     }
