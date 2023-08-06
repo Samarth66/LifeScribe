@@ -1,34 +1,36 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../css/Header.css";
 
 const Header = () => {
   const [page, setPage] = useState("");
 
   function updateHeader(event) {
-    console.log();
-    setPage(event.target.textContent);
+    const clickedPage = event.target.textContent;
+    setPage(clickedPage);
   }
+
   return (
     <div>
       <header>
         <h2 className="logo">Logo</h2>
         <h2 className="subheading">{page}</h2>
         <nav className="navigation">
-          <a href="#" onClick={updateHeader}>
+          <Link to="/journal" onClick={updateHeader}>
             Journal
-          </a>
-          <a href="#" onClick={updateHeader}>
+          </Link>
+          <Link to="/goal" onClick={updateHeader}>
             Goal Tracker
-          </a>
-          <a href="#" onClick={updateHeader}>
+          </Link>
+          <Link to="/health" onClick={updateHeader}>
             Health Tracker
-          </a>
-          <a href="#" onClick={updateHeader}>
+          </Link>
+          <Link to="/spending" onClick={updateHeader}>
             Spending Tracker
-          </a>
-          <a href="#" onClick={updateHeader}>
+          </Link>
+          <Link to="/dashboard" onClick={updateHeader}>
             Dashboard
-          </a>
+          </Link>
           <button className="loginButton">Logout</button>
         </nav>
       </header>

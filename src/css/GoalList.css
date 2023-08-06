@@ -1,0 +1,42 @@
+.listBody {
+  background-color: white;
+  margin: 0px;
+  margin-top: 100px;
+
+  width: 300px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.listName {
+  margin: 0px;
+  padding-top: 20px;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: none;
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  color: white;
+  background-color: #00203fff;
+}
+
+.enterItem {
+  margin: 0px;
+  margin: 10px 20px;
+  border-radius: 10px;
+  height: 28px;
+}

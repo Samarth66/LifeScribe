@@ -27,11 +27,13 @@ const userRoutes = require("./routes/login");
 const signupRoutes = require("./routes/signup");
 const journalRoutes = require("./routes/journal");
 const journalEntriesRoutes = require("./routes/journalEntries");
+const goalTracker = require("./routes/goalTracker");
 
 app.use(userRoutes);
 app.use("/", signupRoutes);
 app.use("/", journalRoutes(io));
 app.use("/", journalEntriesRoutes);
+app.use("/", goalTracker);
 
 const PORT = 8000;
 server.listen(PORT, () => {

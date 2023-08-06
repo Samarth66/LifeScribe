@@ -38,12 +38,13 @@ const Journal = () => {
   }, [updateButton]);
 
   const id = userDetails.id;
+  console.log("id is", id);
 
   useEffect(() => {}, [journalEntries]);
 
   useEffect(() => {
     // Fetch journal entries for the specific user ID when the component mounts
-    console.log(journalEntries);
+    console.log("journal entries", journalEntries);
 
     dispatch(fetchJournalEntries(id));
   }, [dispatch, id]);

@@ -20,6 +20,17 @@ const initialSelectedJournalDetails = {
   },
 };
 
+const initialBoard = {
+  boardEntries: [],
+};
+
+const initialSelectedBoardDetails = {
+  board: {
+    boardId: "",
+    title: "",
+  },
+};
+
 const selectedJournalDetailsReducer = (
   state = initialSelectedJournalDetails,
   action
@@ -73,9 +84,22 @@ const journalReducer = (state = initialState, action) => {
   }
 };
 
+const boardReducer = (state = initialBoard, action) => {
+  switch (action.type) {
+    case "FETCH_BOAD_ENTRIES":
+      return {
+        ...state,
+        boardEntries: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const store = configureStore({
   reducer: {
     journal: journalReducer,
+    board: boardReducer,
     userDetails: userReducer,
     journalDetails: selectedJournalDetailsReducer,
   },

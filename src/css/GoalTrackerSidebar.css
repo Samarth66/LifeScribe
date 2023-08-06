@@ -1,0 +1,21 @@
+.sidebar {
+  margin-top: 100px;
+  display: flex;
+}
+
+.createBoard {
+  display: flex;
+  flex-direction: column;
+  background-color: bisque;
+}
+
+.boardInput {
+  margin: 20px;
+  border-radius: 20px;
+  height: 25px;
+  margin: 5px;
+}
+.boardButton {
+  border-radius: 20px;
+  margin: 20px;
+}

@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Journal from "./pages/Journal";
-import GoalTracker from "./pages/goalTracker/GoalTracker";
+import GoalTracker from "./pages/GoalTracker";
 
 const App = () => {
   useEffect(() => {

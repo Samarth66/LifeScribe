@@ -1,0 +1,13 @@
+.goalSidebarBlock {
+  display: flex;
+  background-color: #a2a8d3;
+  border-top: 0.5px solid black;
+  border-bottom: 0.5px solid black;
+  justify-content: center;
+  height: 40px;
+  align-items: center;
+}
+
+.goalSidebarBlock:hover {
+  background-color: aliceblue;
+}
