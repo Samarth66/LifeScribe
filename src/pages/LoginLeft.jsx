@@ -10,10 +10,10 @@ const LoginLeft = () => {
       <h1 className="heading heading3">Life Management Hub!</h1>
 
       <h1 className="heading">
-        <span class="word animated bounceInDown">Capture,</span>
-        <span class="word animated bounceInDown">Conquer,</span>
-        <span class="word animated bounceInDown">and</span>
-        <span class="word animated bounceInDown">Elevate</span>
+        <span className="word animated bounceInDown">Capture,</span>
+        <span className="word animated bounceInDown">Conquer,</span>
+        <span className="word animated bounceInDown">and</span>
+        <span className="word animated bounceInDown">Elevate</span>
       </h1>
       <h1 className="heading heading4">Every Moment of Your Life.</h1>
     </div>

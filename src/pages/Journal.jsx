@@ -5,7 +5,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import "../css/Journal.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import io from "socket.io-client";
+
 import { v4 as uuidv4 } from "uuid";
 
 const Journal = () => {

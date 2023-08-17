@@ -28,7 +28,12 @@ const Sidebar = ({ onClearData }) => {
       </button>
       <div className="journalEntr">
         {journalEntries.map((entry) => (
-          <SidebarTitles title={entry.title} date={entry.date} id={entry._id} />
+          <SidebarTitles
+            title={entry.title}
+            date={entry.date}
+            key={entry._id}
+            id={entry._id}
+          />
         ))}
       </div>
     </div>

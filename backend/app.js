@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
-const server = http.createServer(app); // Create an HTTP server using express app
+const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -33,7 +33,7 @@ app.use(userRoutes);
 app.use("/", signupRoutes);
 app.use("/", journalRoutes(io));
 app.use("/", journalEntriesRoutes);
-app.use("/", goalTracker);
+app.use("/", goalTracker(io));
 
 const PORT = 8000;
 server.listen(PORT, () => {

@@ -12,7 +12,7 @@ function GoalTrackerSidebar() {
   const [showInput, setShowInput] = useState(false);
   const [boardName, setBoardsName] = useState("");
   const dispatch = useDispatch();
-  const boardEntries = useSelector((state) => state.board.boardDetails);
+  const boardEntries = useSelector((state) => state.board.boardEntries);
 
   const id = userDetails.id;
 
@@ -21,7 +21,13 @@ function GoalTrackerSidebar() {
       const entries = await axios.get("http://localhost:8000/fetch-sidebar", {
         params: { userId: id }, // Pass the user ID as a query parameter
       });
-      console.log("yeye fetched board", entries);
+      console.log("yeye fetched board", entries.data);
+      const bentry = entries.data;
+      dispatch({
+        type: "FETCH_BOAD_ENTRIES",
+        payload: bentry,
+      });
+      console.log("have i got it in reduc?", boardEntries);
     } catch (e) {
       console.log("cannot fetch board entries", e);
     }
@@ -31,6 +37,10 @@ function GoalTrackerSidebar() {
 
     dispatch(fetchBoardEntries(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    console.log("Updated board entries:", boardEntries);
+  }, [boardEntries]);
 
   function show() {
     setShowInput(true);
@@ -46,11 +56,16 @@ function GoalTrackerSidebar() {
           title: boardName,
         }
       );
-      dispatch({ type: "FETCH_BOAD_ENTRIES", payload: boardEntry.data });
+      console.log("new entry", boardEntry.data);
+      dispatch({ type: "ADD_BOARD_ENTRIES", payload: boardEntry.data });
     } catch (e) {
       console.log("cannot enter board to collection", e);
     }
     setShowInput(false);
+  }
+
+  function handleClick(e) {
+    console.log(e);
   }
   return (
     <div>
@@ -62,7 +77,6 @@ function GoalTrackerSidebar() {
             userDetails.name.slice(1).toLowerCase()}
           's Journal
         </p>
-
         <input type="search" className="titleSearch" />
         <br />
         <button className="newEntry" onClick={show}>
@@ -86,7 +100,10 @@ function GoalTrackerSidebar() {
         ) : (
           <></>
         )}
-        <BoardItems />
+        console.log(boardEntries);
+        {boardEntries.map((board, index) => (
+          <BoardItems key={board._id} id={board._id} title={board.title} />
+        ))}
       </div>
     </div>
   );

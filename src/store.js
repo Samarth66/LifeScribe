@@ -31,6 +31,23 @@ const initialSelectedBoardDetails = {
   },
 };
 
+const selectedBoardDetailsReducer = (
+  state = initialSelectedBoardDetails,
+  action
+) => {
+  switch (action.type) {
+    case "SELECTED_JOURNAL_DETAIL":
+      return {
+        ...state,
+        board: {
+          boardId: action.payload._id,
+          title: action.payload.title,
+        },
+      };
+    default:
+      return state;
+  }
+};
 const selectedJournalDetailsReducer = (
   state = initialSelectedJournalDetails,
   action
@@ -87,9 +104,15 @@ const journalReducer = (state = initialState, action) => {
 const boardReducer = (state = initialBoard, action) => {
   switch (action.type) {
     case "FETCH_BOAD_ENTRIES":
+      console.log("Fetching board entries:", action.payload);
       return {
         ...state,
         boardEntries: action.payload,
+      };
+    case "ADD_BOARD_ENTRIES":
+      return {
+        ...state,
+        boardEntries: [...state.boardEntries, action.payload],
       };
     default:
       return state;
@@ -102,6 +125,7 @@ const store = configureStore({
     board: boardReducer,
     userDetails: userReducer,
     journalDetails: selectedJournalDetailsReducer,
+    boardDetails: selectedBoardDetailsReducer,
   },
 });
 

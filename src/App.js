@@ -1,42 +1,35 @@
 import React, { useEffect } from "react";
+import socket from "./pages/socket";
 import "./css/App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import io from "socket.io-client";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Journal from "./pages/Journal";
 import GoalTracker from "./pages/GoalTracker";
 
 const App = () => {
   useEffect(() => {
-    const socket = io("http://localhost:8000");
-
     // Log a message when the socket is connected
-    socket.on("connect", () => {
-      console.log("Socket is connected");
-    });
+    console.log("Inside useEffect in App.js", socket);
 
     socket.on("testEvent", (data) => {
       console.log("Received testEvent:", data);
+    });
+
+    socket.on("new-card-added", () => {
+      console.log("received scoket new card");
     });
 
     socket.on("newEntry", (newEntryData) => {
       console.log("Received newEntry:", newEntryData);
-      // Update the sidebarData state with the new entry data
     });
 
     socket.on("testEvent", (data) => {
       console.log("Received testEvent:", data);
     });
 
-    // Clean up the socket connection when the component unmounts
     return () => socket.disconnect();
   }, []);
 
