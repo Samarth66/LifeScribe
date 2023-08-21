@@ -1,4 +1,4 @@
-const { Server } = require("socket.io");
+/*const { Server } = require("socket.io");
 
 function initializeSocket(server) {
   const io = new Server(server, {
@@ -17,3 +17,4 @@ function initializeSocket(server) {
 }
 
 module.exports = initializeSocket;
+*/

@@ -29,6 +29,9 @@ const App = () => {
     socket.on("testEvent", (data) => {
       console.log("Received testEvent:", data);
     });
+    socket.on("new-card-added", (newEntry) => {
+      console.log("socket in goalList triggered gg");
+    });
 
     return () => socket.disconnect();
   }, []);

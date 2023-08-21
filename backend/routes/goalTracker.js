@@ -3,7 +3,6 @@ const router = express.Router();
 const { Board, List, Card } = require("./schema/goalTracker/boards");
 const { LockSharp } = require("@mui/icons-material");
 const { default: axios } = require("axios");
-const io = require("../app");
 
 function goalTracker(io) {
   router.post("/goal-sidebar-board", async (req, res) => {
@@ -57,6 +56,7 @@ function goalTracker(io) {
       const newEntry = await Card.insertMany(req.body);
 
       io.emit("new-card-added", newEntry);
+      console.log("card added to database");
     } catch (e) {
       console.log("failed to add card data to database");
     }
@@ -84,6 +84,29 @@ function goalTracker(io) {
       console.log("Cannot retrieve lists from database", e);
     }
   });
+
+  router.get("/fetch-cards", async (req, res) => {
+    try {
+      const { listId } = req.query;
+
+      const cards = await Card.find({ listId: listId });
+      res.json(cards);
+    } catch (e) {
+      console.log("sorry cannot fetch cards");
+    }
+  });
+
+  router.delete("/delete-cards", async (req, res) => {
+    try {
+      const { id } = req.query;
+
+      await Card.findByIdAndDelete(id);
+      io.emit("cardDeleted");
+    } catch (e) {
+      console.log("card deletion failed", e);
+    }
+  });
   return router;
 }
+
 module.exports = goalTracker;

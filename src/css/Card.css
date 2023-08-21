@@ -1,0 +1,12 @@
+.cards {
+  display: flex;
+  margin: 5px;
+  padding: 5px;
+  background-color: white;
+  border-radius: 10px;
+  justify-content: space-between;
+}
+
+.cards:hover {
+  background-color: #e7e7e7;
+}

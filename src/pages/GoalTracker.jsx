@@ -5,6 +5,7 @@ import "../css/GoalTracker.css";
 import { useDispatch, useSelector } from "react-redux";
 import GoalLists from "./GoalLists";
 import axios from "axios";
+import socket from "./socket";
 
 const GoalTracker = () => {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -13,6 +14,18 @@ const GoalTracker = () => {
   const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
   const [fetchedList, setFetchedList] = useState([]);
 
+  const [cardEntries, setCardEntries] = useState([]);
+
+  useEffect(() => {
+    // Log a message when the socket is connected
+
+    socket.on("cardDeleted", () => {
+      fetchData();
+    });
+
+    return () => socket.disconnect();
+  }, []);
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:8000/fetch-lists", {
@@ -20,7 +33,7 @@ const GoalTracker = () => {
           boardId: selectedBoardDetails.boardId,
         },
       });
-
+      setCardEntries(response.data);
       setFetchedList(response.data);
       console.log(fetchedList);
     } catch {

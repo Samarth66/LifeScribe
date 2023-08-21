@@ -3,15 +3,6 @@ const router = express.Router();
 const journalDetail = require("../journalSchema");
 
 function journalRoutes(io) {
-  io.on("connection", (socket) => {
-    // This will be executed when a client connects
-    io.emit("testEvent", "This is a test event!");
-
-    socket.on("disconnect", () => {
-      console.log("a user disconnected");
-    });
-  });
-
   router.post("/journal", async (req, res) => {
     const { id, title, description, current } = req.body;
 
