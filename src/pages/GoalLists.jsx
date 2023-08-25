@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import Card from "./Card";
 import socket from "./socket";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"; // Import the components
 
 function GoalLists(props) {
   const [showInput, setShowInput] = useState(false);
@@ -13,14 +14,23 @@ function GoalLists(props) {
   const [fetchedCards, setFetchedCards] = useState([]);
 
   useEffect(() => {
-    // Log a message when the socket is connected
-
+    fetchCards();
+  }, [props.forceUpdate]);
+  useEffect(() => {
+    fetchCards();
     socket.on("cardDeleted", () => {
-      console.log("card gone");
+      console.log("received deleteion confirmation");
+      fetchCards();
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.off("cardDeleted", handleCardDeleted);
+    };
   }, []);
+
+  const handleCardDeleted = () => {
+    console.log("card gone");
+  };
 
   function handleCardTitleChange(event) {
     setShowInput(true);
@@ -47,46 +57,63 @@ function GoalLists(props) {
     setFetchedCards(response.data);
   }
 
-  useEffect(() => {
-    fetchCards();
-  }, [fetchCards]);
-
   return (
-    <div className="list">
-      <div className="listBody">
-        <p className="listName">
-          <b>{props.listName}</b>
-        </p>
+    <div>
+      <div className="list">
+        <div className="listBody">
+          <p className="listName">
+            <b>{props.listName}</b>
+          </p>
+          <Droppable droppableId={listId.toString()}>
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className="cardsContainer"
+              >
+                {fetchedCards.map((data, index) => (
+                  <Draggable
+                    key={data._id}
+                    draggableId={data._id.toString()}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        <Card title={data.title} id={data._id} />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
 
-        {fetchedCards.map((data) => (
-          <Card
-            title={data.title}
-            key={data._id}
-            id={data._id}
-            listId={props.id}
-          />
-        ))}
-
-        {showInput ? (
-          <>
-            <input
-              type="text"
-              name="textBox"
-              placeholder="enter item"
-              className="enterItem"
-              onChange={(e) => {
-                setCardName(e.target.value);
-              }}
-            />
-            <button className="button" onClick={handleCardTitleChangeF}>
-              Save Item
+          {showInput ? (
+            <>
+              <input
+                type="text"
+                name="textBox"
+                placeholder="enter item"
+                className="enterItem"
+                onChange={(e) => {
+                  setCardName(e.target.value);
+                }}
+              />
+              <button className="button" onClick={handleCardTitleChangeF}>
+                Save Item
+              </button>
+            </>
+          ) : (
+            <button className="button" onClick={handleCardTitleChange}>
+              <AddIcon /> Add a card
             </button>
-          </>
-        ) : (
-          <button className="button" onClick={handleCardTitleChange}>
-            <AddIcon /> Add a card
-          </button>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

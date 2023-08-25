@@ -5,7 +5,6 @@ import axios from "axios";
 
 function Card(props) {
   const deleteCard = async () => {
-    console.log(props);
     axios
       .delete("http://localhost:8000/delete-cards", {
         params: {
@@ -16,7 +15,7 @@ function Card(props) {
         console.log("card deleted succesfully");
       })
       .catch((error) => {
-        console.log("sda dsa");
+        console.log("card deletetion failed");
       });
   };
   return (

@@ -6,9 +6,7 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-  },
+
   listId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "list",
@@ -24,7 +22,7 @@ const listSchema = new mongoose.Schema({
     ref: "board",
     required: true,
   }, // Reference to the board it belongs to
-  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "card" }], // Array of references to cards associated with this list
+  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }], // Array of references to cards associated with this list
 });
 
 const boardSchema = new mongoose.Schema({

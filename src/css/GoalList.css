@@ -40,3 +40,13 @@
   border-radius: 10px;
   height: 28px;
 }
+
+.react-beautiful-dnd-draggable {
+  transition: transform 0.2s ease-out;
+}
+
+/* Add shadow and opacity to dragging item */
+.react-beautiful-dnd-drag-dragging {
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0.8;
+}

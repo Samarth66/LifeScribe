@@ -2,9 +2,24 @@ const express = require("express");
 const router = express.Router();
 const { Board, List, Card } = require("./schema/goalTracker/boards");
 const { LockSharp } = require("@mui/icons-material");
-const { default: axios } = require("axios");
 
 function goalTracker(io) {
+  router.post("/add-card", async (req, res) => {
+    try {
+      const data = {
+        title: req.body.title,
+        listId: req.body.listId,
+      };
+      const newEntry = await Card.create(data);
+
+      res
+        .status(200)
+        .json({ message: "Card added successfully", card: newEntry });
+    } catch (e) {
+      console.log("failed to add card data to database");
+    }
+  });
+
   router.post("/goal-sidebar-board", async (req, res) => {
     console.log("test", req.body);
     const data = {
@@ -51,17 +66,6 @@ function goalTracker(io) {
     }
   });
 
-  router.post("/add-card", async (req, res) => {
-    try {
-      const newEntry = await Card.insertMany(req.body);
-
-      io.emit("new-card-added", newEntry);
-      console.log("card added to database");
-    } catch (e) {
-      console.log("failed to add card data to database");
-    }
-  });
-
   router.get("/fetch-sidebar", async (req, res) => {
     try {
       const { userId } = req.query;
@@ -102,8 +106,22 @@ function goalTracker(io) {
 
       await Card.findByIdAndDelete(id);
       io.emit("cardDeleted");
+      res.status(200).json({ message: "Card deleted successfully" });
     } catch (e) {
       console.log("card deletion failed", e);
+    }
+  });
+
+  router.post("/update-cards", async (req, res) => {
+    try {
+      const { cardId, newParentListId } = req.body;
+      console.log("cardS", cardId);
+      await Card.findByIdAndUpdate(cardId, { listId: newParentListId });
+      console.log("success");
+
+      res.status(200).json({ message: "Card's list updated successfully." });
+    } catch (e) {
+      console.log("updating card failed", e);
     }
   });
   return router;
