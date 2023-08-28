@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../css/GoalTrackerSidebar.css";
+import "../css/Sidebar.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -56,7 +57,7 @@ function GoalTrackerSidebar() {
           title: boardName,
         }
       );
-      console.log("new entry", boardEntry.data);
+
       dispatch({ type: "ADD_BOARD_ENTRIES", payload: boardEntry.data });
     } catch (e) {
       console.log("cannot enter board to collection", e);
@@ -80,17 +81,16 @@ function GoalTrackerSidebar() {
         <input type="search" className="titleSearch" />
         <br />
         <button className="newEntry" onClick={show}>
-          New Etry
+          <b>New Entry</b>
         </button>
         {showInput ? (
           <div className="createBoard">
-            <p>create a new board</p>
+            <p className="newBoard">create a new board</p>
             <input
               className="boardInput"
               type="text"
               onChange={(event) => {
                 setBoardsName(event.target.value);
-                console.log(boardName);
               }}
             ></input>
             <button className="boardButton" onClick={hideshow}>
@@ -100,10 +100,11 @@ function GoalTrackerSidebar() {
         ) : (
           <></>
         )}
-        console.log(boardEntries);
-        {boardEntries.map((board, index) => (
-          <BoardItems key={board._id} id={board._id} title={board.title} />
-        ))}
+        <div className="entry">
+          {boardEntries.map((board, index) => (
+            <BoardItems key={board._id} id={board._id} title={board.title} />
+          ))}
+        </div>
       </div>
     </div>
   );

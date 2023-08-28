@@ -24,9 +24,9 @@ const Sidebar = ({ onClearData }) => {
       <input type="search" className="titleSearch" />
       <br />
       <button className="newEntry" onClick={handleNewEntryClick}>
-        New Entry
+        <b>New Entry</b>
       </button>
-      <div className="journalEntr">
+      <div className="entry">
         {journalEntries.map((entry) => (
           <SidebarTitles
             title={entry.title}

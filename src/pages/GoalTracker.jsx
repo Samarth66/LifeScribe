@@ -13,6 +13,7 @@ const GoalTracker = () => {
   const dispatch = useDispatch();
   const boardEntries = useSelector((state) => state.board.boardEntries);
   const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
+
   const [fetchedList, setFetchedList] = useState([]);
   const [forceUpdate, setForceUpdate] = useState(false);
 
@@ -75,7 +76,7 @@ const GoalTracker = () => {
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="GoalTrackerBody">
-        <div className="goalTrackerSidebar">
+        <div className="goalTrackerSidebar journalSidebar">
           <GoalTrackerSidebar />
         </div>
 

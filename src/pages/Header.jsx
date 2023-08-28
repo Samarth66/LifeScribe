@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div>
       <header>
-        <h2 className="logo">Logo</h2>
+        <h2 className="logo">LifeScribe</h2>
         <h2 className="subheading">{page}</h2>
         <nav className="navigation">
           <Link to="/journal" onClick={updateHeader}>

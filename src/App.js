@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Journal from "./pages/Journal";
 import GoalTracker from "./pages/GoalTracker";
+import HealthTracker from "./pages/healthTracker/HealthTracker/HealthTracker";
 
 const App = () => {
   useEffect(() => {
@@ -45,6 +46,7 @@ const App = () => {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/journal" element={<Journal />} />
           <Route path="/goal" element={<GoalTracker />} />
+          <Route path="/health" element={<HealthTracker />} />
         </Routes>
       </Router>
     </div>
