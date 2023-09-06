@@ -3,7 +3,9 @@ import "../css/Login.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import socket from "./socket";
 import { useDispatch, useSelector } from "react-redux";
+const initializeSocket = require("./socket");
 
 const LoginRight = () => {
   const [email, setEmail] = useState("");
@@ -11,9 +13,7 @@ const LoginRight = () => {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(userDetails);
-  }, [userDetails]);
+  useEffect(() => {}, [userDetails]);
 
   const history = useNavigate();
 
@@ -34,7 +34,12 @@ const LoginRight = () => {
               id: resData.id,
               name: resData.name,
             };
+            socket.emit("joinRoom", userData.id);
+            socket.on("messageFromServer", (message) => {
+              console.log("Received message from server:", message);
+            });
             dispatch({ type: "SET_USER_DETAILS", payload: userData });
+
             history("/journal", {
               state: { name: resData.name, id: resData.id },
             });

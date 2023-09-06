@@ -1,0 +1,27 @@
+.meal-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.meal-item {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.meal-info {
+  margin-top: 8px;
+}
+
+.mealHead {
+  display: flex;
+}
+
+.totalEnergy {
+  text-align: end;
+}

@@ -1,0 +1,7 @@
+.HealthTracker {
+  display: flex;
+}
+.CaloriesTracker {
+  margin-top: 90px;
+  flex: 1;
+}

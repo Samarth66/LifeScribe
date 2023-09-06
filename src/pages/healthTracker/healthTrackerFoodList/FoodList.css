@@ -1,0 +1,25 @@
+
+.food-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.food-card {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+  transition: background-color 0.2s ease; 
+}
+
+.food-card:hover {
+  background-color: #e7e7e7;
+}
+
+.food-card h3 {
+  font-size: 16px;
+  margin: 0;
+}

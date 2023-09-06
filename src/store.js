@@ -31,6 +31,18 @@ const initialSelectedBoardDetails = {
   },
 };
 
+const initialSelectedDateDetails = {
+  selectedDateDetails: {
+    date: new Date().toISOString().split("T")[0],
+  },
+};
+
+const initialSelectedHealthId = {
+  selectedIdDetails: {
+    id: "",
+  },
+};
+
 const selectedBoardDetailsReducer = (
   state = initialSelectedBoardDetails,
   action
@@ -48,11 +60,42 @@ const selectedBoardDetailsReducer = (
       return state;
   }
 };
+
+const selectedDateDetailsReducer = (
+  state = initialSelectedDateDetails,
+  action
+) => {
+  switch (action.type) {
+    case "SELECTED_DATE_DETAIL":
+      return {
+        ...state,
+        selectedDateDetails: {
+          date: action.payload,
+        },
+      };
+    default:
+      return state;
+  }
+};
+
+const selectedHealthIdReducer = (state = initialSelectedHealthId, action) => {
+  switch (action.type) {
+    case "SELECTED_HEALTH_ID":
+      return {
+        ...state,
+        selectedIdDetails: {
+          id: action.payload,
+        },
+      };
+    default:
+      return state;
+  }
+};
+
 const selectedJournalDetailsReducer = (
   state = initialSelectedJournalDetails,
   action
 ) => {
-  console.log("test ", action.payload);
   switch (action.type) {
     case "GET_JOURNAL_DETAILS":
       return {
@@ -126,6 +169,8 @@ const store = configureStore({
     userDetails: userReducer,
     journalDetails: selectedJournalDetailsReducer,
     boardDetails: selectedBoardDetailsReducer,
+    selectedDateDetails: selectedDateDetailsReducer,
+    selectedIdDetails: selectedHealthIdReducer,
   },
 });
 

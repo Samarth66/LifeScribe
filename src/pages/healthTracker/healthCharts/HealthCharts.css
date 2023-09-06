@@ -1,0 +1,29 @@
+/* HealthCharts.css */
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.chart-title {
+  font-size: 24px;
+  margin: 5px;
+  color: #333;
+}
+.value-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.value-list li {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #333;
+}
