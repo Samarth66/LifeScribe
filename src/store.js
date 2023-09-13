@@ -37,6 +37,12 @@ const initialSelectedDateDetails = {
   },
 };
 
+const initialSelectedSpendingDateDetails = {
+  selectedSpendingDateDetails: {
+    date: new Date().toISOString().split("T")[0],
+  },
+};
+
 const initialSelectedHealthId = {
   selectedIdDetails: {
     id: "",
@@ -70,6 +76,23 @@ const selectedDateDetailsReducer = (
       return {
         ...state,
         selectedDateDetails: {
+          date: action.payload,
+        },
+      };
+    default:
+      return state;
+  }
+};
+
+const selectedSpendingDateDetailsReducer = (
+  state = initialSelectedSpendingDateDetails,
+  action
+) => {
+  switch (action.type) {
+    case "SELECTED_SPENDING_DATE_DETAIL":
+      return {
+        ...state,
+        selectedSpendingDateDetails: {
           date: action.payload,
         },
       };
@@ -170,6 +193,7 @@ const store = configureStore({
     journalDetails: selectedJournalDetailsReducer,
     boardDetails: selectedBoardDetailsReducer,
     selectedDateDetails: selectedDateDetailsReducer,
+    selectedSpendingDateDetails: selectedSpendingDateDetailsReducer,
     selectedIdDetails: selectedHealthIdReducer,
   },
 });

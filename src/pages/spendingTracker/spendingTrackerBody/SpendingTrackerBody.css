@@ -1,0 +1,115 @@
+/* SpendingTrackerBody.css */
+
+/* Style for the main container */
+/* SpendingTrackerBody.css */
+
+/* Style for the main container */
+.spending-tracker-body {
+  display: flex;
+  gap: 30px;
+  width: 800px;
+  min-height: fit-content;
+  height: 600px;
+
+  justify-content: space-between; /* Spread the children evenly */
+}
+
+/* Style for the spending tracker card */
+.spending-tracker-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #e0e0e0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Take up 1 part (50%) of the available space */
+  max-width: 49%; /* Ensure a small gap between cards */
+  overflow-x: auto; /* Add horizontal scrollbar if content overflows */
+  white-space: nowrap; /* Prevent items from wrapping */
+}
+
+/* Style for the title */
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Style for the "Add" button */
+.add-transaction-button {
+  background-color: #0056b3;
+
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-transaction-button:hover {
+  background-color: #0056b3;
+}
+
+/* Style for the transaction card container */
+.transaction-card-container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure items wrap to the next line if needed */
+  flex-direction: column;
+  gap: 20px; /* Add some space between individual cards */
+  height: fit-content;
+}
+
+/* Style for individual transaction cards */
+.transaction-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  flex-basis: calc(50% - 20px); /* Two cards per row with some gap in between */
+}
+
+.transaction-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the spending chart */
+.spendingCharts {
+  display: flex;
+  flex-direction: column;
+  background-color: #e0e0e0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1; /* Take up 1 part (50%) of the available space */
+  max-width: 49%; /* Ensure a small gap between cards */
+}
+
+/* Add styles for the spendingHeading class 
+ {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0;
+  text-align: center;
+  font-weight: bold;
+}
+
+Style the h2 element within the spendingHeading div */
+.spendingHeading {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #e0e0e0;
+  text-align: center;
+  font-weight: bold;
+}

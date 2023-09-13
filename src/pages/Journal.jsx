@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
+
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import "../css/Journal.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import ChatBot from "./ChatBot/ChatBot";
+import ChatBotIcon from "../robot-solid.svg";
+import rake from "rake-js";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -20,6 +28,22 @@ const Journal = () => {
   const selectedJournalDetails = useSelector(
     (state) => state.journalDetails.selectedJournalDetails
   );
+  const [showChatBot, setShowChatBot] = useState(false);
+  const [keywords, setKeywords] = useState([]);
+  const [showDialog, setShowDialog] = useState(true);
+  const [prompt, setPrompt] = useState("");
+
+  const toggleChatBot = () => {
+    const wordlist = rake(description);
+    const m = Math.min(3, wordlist.length);
+    setKeywords(wordlist.slice(0, m));
+
+    const keywordString = keywords.join(", ");
+    console.log(wordlist, wordlist.slice(0, m), keywordString);
+    setPrompt("In brief Tell me 5 books related to " + keywordString);
+
+    setShowChatBot(!showChatBot);
+  };
 
   useEffect(() => {
     const journalBody = document.getElementById("journalBody");
@@ -133,11 +157,14 @@ const Journal = () => {
   return (
     <div>
       fetchJournalEntries(id);
-      <Header />
+      <div>
+        <Header />
+      </div>
       <div className="containerr">
         <div className="journalSidebar">
           <Sidebar onClearData={handleClearData} />
         </div>
+
         <div className="journalFormContainer">
           <form className="JournalForm">
             <input
@@ -166,6 +193,21 @@ const Journal = () => {
               value="Add to journal"
             />
           </form>
+          <div className="chat">
+            <div className={`dialog-box ${showDialog ? "show" : ""}`}>
+              Interested in discovering books and articles that align with your
+              journal entries?
+            </div>
+            <div>
+              <svg
+                onClick={toggleChatBot}
+                style={{ position: "fixed", bottom: "20px", right: "20px" }}
+              >
+                {<SmartToyOutlinedIcon />}
+              </svg>
+              {showChatBot && <ChatBot prompt={prompt} />}
+            </div>
+          </div>
         </div>
       </div>
     </div>

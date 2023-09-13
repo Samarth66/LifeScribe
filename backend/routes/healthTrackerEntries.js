@@ -26,7 +26,6 @@ function healthTracker(io) {
         return res.status(404).json({ error: "Health entry not found" });
       }
 
-      s;
       const mealData = healthEntry.meals;
 
       res.status(200).json(mealData);
@@ -73,6 +72,15 @@ function healthTracker(io) {
       2
     );
   };
+  router.get("/health-dashboard-entries", async (req, res) => {
+    try {
+      const { userId } = req.query;
+      const spendingEntries = await HealthEntry.find({ userId: userId });
+      res.json(spendingEntries);
+    } catch (e) {
+      console.log("failed to fetch spendingEntries", e);
+    }
+  });
 
   router.post("/add-meal", async (req, res) => {
     try {
@@ -98,6 +106,7 @@ function healthTracker(io) {
       res.status(500).json({ error: "Error adding meal" });
     }
   });
+
   return router;
 }
 

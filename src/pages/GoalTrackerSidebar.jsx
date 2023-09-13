@@ -76,12 +76,12 @@ function GoalTrackerSidebar() {
         <p className="name">
           {userDetails.name.charAt(0).toUpperCase() +
             userDetails.name.slice(1).toLowerCase()}
-          's Journal
+          's Goal Tracker
         </p>
         <input type="search" className="titleSearch" />
         <br />
         <button className="newEntry" onClick={show}>
-          <b>New Entry</b>
+          <b>Add a board</b>
         </button>
         {showInput ? (
           <div className="createBoard">

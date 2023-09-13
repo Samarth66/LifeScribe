@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./HealthCharts.css"; // Import your CSS file
 import Chart from "chart.js/auto";
 
-function HealthCharts({ totalValues }) {
+function HealthCharts({ totalValues, total }) {
   const chartRef = useRef(null);
   const [chartInstance, setChartInstance] = useState(null);
 
@@ -83,7 +83,8 @@ function HealthCharts({ totalValues }) {
 
   return (
     <div className="chart-container">
-      <h3>Total Values for the Day</h3>
+      <h2>Total caloeies consumed today:{total}</h2>
+      <h3>Macros</h3>
       {totalValues ? console.log("dsa") : <p>No total values available.</p>}
       <canvas ref={chartRef}></canvas>
     </div>

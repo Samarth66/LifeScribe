@@ -3,7 +3,6 @@ import "../../../css/Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { useEffect } from "react";
 
 function HealthTrackerSidebar() {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -31,11 +30,11 @@ function HealthTrackerSidebar() {
   maxSelectableDate.setHours(0, 0, 0, 0);
 
   return (
-    <div className="sidebar">
+    <div className="sidebar-spending">
       <p className="name">
         {userDetails.name.charAt(0).toUpperCase() +
           userDetails.name.slice(1).toLowerCase()}
-        's Journal
+        's Health Tracker
       </p>
 
       <br />

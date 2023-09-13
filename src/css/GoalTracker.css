@@ -1,5 +1,7 @@
 .GoalTrackerBody {
   display: flex;
+  background-color: #f5f5f5; /* Updated background color for contrast */
+  color: #333;
 }
 
 .lists {

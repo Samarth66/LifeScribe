@@ -4,12 +4,12 @@
 }
 
 .healthMeals {
-  flex: 1; 
+  flex: 1;
   padding: 10px;
 }
 
 .healthCharts {
-  flex: 1; 
+  flex: 1;
   padding: 10px;
 }
 
@@ -19,7 +19,7 @@
   padding: 16px;
   margin: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #38598b;
+  background-color: #e0e0e0;
   text-align: center;
   font-weight: bold;
 }

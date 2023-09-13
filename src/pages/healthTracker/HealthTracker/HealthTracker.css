@@ -1,5 +1,7 @@
 .HealthTracker {
   display: flex;
+  background-color: #f5f5f5;
+  color: #333;
 }
 .CaloriesTracker {
   margin-top: 90px;

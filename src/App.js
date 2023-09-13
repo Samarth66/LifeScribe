@@ -5,10 +5,11 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/DashBoardBody/DashBoardBody";
 import Journal from "./pages/Journal";
 import GoalTracker from "./pages/GoalTracker";
 import HealthTracker from "./pages/healthTracker/HealthTracker/HealthTracker";
+import SpendingTracker from "./pages/spendingTracker/spendingTracker/SpendingTracker";
 
 const App = () => {
   useEffect(() => {
@@ -47,8 +48,10 @@ const App = () => {
           <Route path="/journal" element={<Journal />} />
           <Route path="/goal" element={<GoalTracker />} />
           <Route path="/health" element={<HealthTracker />} />
+          <Route path="/spending" element={<SpendingTracker />} />
         </Routes>
       </Router>
+      
     </div>
   );
 };

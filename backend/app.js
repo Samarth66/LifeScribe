@@ -6,7 +6,6 @@ const cors = require("cors");
 const app = express();
 const http = require("http");
 
-
 const server = http.createServer(app);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -38,7 +37,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  
   User.findById(id, (err, user) => {
     if (err) {
       return done(err);
@@ -46,7 +44,7 @@ passport.deserializeUser((id, done) => {
     if (!user) {
       return done(null, false, { message: "User not found" });
     }
-    
+
     return done(null, user);
   });
 });
@@ -71,7 +69,7 @@ passport.use(
         }
 
         console.log("came here", user.id);
-       
+
         io.to(user.id).emit("joinRoom", user.id);
 
         return done(null, user);
@@ -101,6 +99,7 @@ const journalRoutes = require("./routes/journal");
 const journalEntriesRoutes = require("./routes/journalEntries");
 const goalTracker = require("./routes/goalTracker");
 const healthTracker = require("./routes/healthTrackerEntries");
+const spendingTracker = require("./routes/spendingTrackerEntry");
 
 app.use(userRoutes);
 app.use("/", signupRoutes);
@@ -108,6 +107,7 @@ app.use("/", journalRoutes(io));
 app.use("/", journalEntriesRoutes);
 app.use("/", goalTracker(io));
 app.use("/", healthTracker(io));
+app.use("/", spendingTracker(io));
 const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

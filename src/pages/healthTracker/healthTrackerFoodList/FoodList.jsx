@@ -7,7 +7,7 @@ const FoodList = (props) => {
       <div className="food-card">
         <h3>{props.foodName}</h3>
         <p>
-          <strong>Energy:</strong> {props.foodData.energy}
+          <strong>Energy:</strong> {props.foodData}
         </p>
       </div>
     </div>

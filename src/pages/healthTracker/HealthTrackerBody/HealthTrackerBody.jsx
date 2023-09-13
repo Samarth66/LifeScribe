@@ -16,16 +16,6 @@ const HealthTrackerBody = () => {
   );
   const [mealUpdated, setMealUpdated] = useState(false);
 
-  useEffect(() => {
-    socket.on("meal-updated", () => {
-      setMealUpdated(true);
-    });
-
-    return () => {
-      socket.off("meal-updated");
-    };
-  }, []);
-
   const [entry, setEntry] = useState(null);
   const [chartData, setChartData] = useState(null);
   const user = useSelector((state) => state.userDetails.userDetails);
@@ -42,6 +32,14 @@ const HealthTrackerBody = () => {
       console.log("in healthbody");
       fetchEntryForDate(userDetails, healthDate);
     }
+    socket.on("meal-updated", () => {
+      fetchEntryForDate(userDetails, healthDate);
+      console.log("received from socket");
+    });
+
+    return () => {
+      socket.off("meal-updated");
+    };
   }, [healthDate]);
 
   const fetchEntryForDate = async (userId, date) => {
@@ -128,22 +126,29 @@ const HealthTrackerBody = () => {
   });
 
   return (
-    <div className="healthTrackerBodyy">
-      {console.log("stopppppp", healthDate)}
-      <div className="healthMeals">
-        <div className="selected-date">
-          <p>Selected Date: {formattedDate}</p>
-        </div>
-        {entry && (
-          <div className="healthMeal">
-            <MealComponent title="breakfast" meals={entry.meals.breakfast} />
-            <MealComponent title="lunch" meals={entry.meals.lunch} />
-            <MealComponent title="dinner" meals={entry.meals.dinner} />
-          </div>
-        )}
+    <div>
+      <div className="selected-date">
+        <p>Selected Date: {formattedDate}</p>
       </div>
-      <div className="healthCharts">
-        <HealthCharts totalValues={chartData} />
+      <div className="healthTrackerBodyy">
+        {console.log("stopppppp", healthDate)}
+        <div className="healthMeals">
+          {entry && (
+            <div className="healthMeal">
+              <MealComponent title="breakfast" meals={entry.meals.breakfast} />
+              <MealComponent title="lunch" meals={entry.meals.lunch} />
+              <MealComponent title="dinner" meals={entry.meals.dinner} />
+            </div>
+          )}
+        </div>
+        <div className="healthCharts">
+          {entry && (
+            <HealthCharts
+              totalValues={chartData}
+              total={entry.meals.total["energy"]}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

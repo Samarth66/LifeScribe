@@ -1,5 +1,6 @@
 .containerr {
   display: flex;
+  color: #333;
 }
 
 .journalFormContainer {
@@ -7,7 +8,8 @@
   justify-content: center; /* Center the JournalForm horizontally */
   flex: 1; /* Let the container take the remaining available space */
   margin-top: 0px;
-  margin-top: 55px;
+  margin-top: 80px;
+  background-color: #f0f0f0; /* Suitable background color */
 }
 
 .JournalForm {
@@ -15,11 +17,11 @@
   display: flex;
   flex-direction: column;
   max-width: 600px;
-
   padding: 20px;
   margin: 20px;
   border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  accent-color: #5bc0de;
+  background-color: #e0e0e0;
   border-radius: 30px;
   margin-bottom: 80px;
 }
@@ -49,4 +51,23 @@
 }
 .journalBody::placeholder {
   text-align: left;
+}
+.dialog-box {
+  position: fixed;
+  bottom: 150px; /* Adjust according to your layout */
+  right: 0px;
+  width: 200px; /* You can set to whatever width you prefer */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.dialog-box.show {
+  opacity: 1;
+  visibility: visible;
 }

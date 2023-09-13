@@ -1,7 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.hd {
+  width: 100%;
 }
 
 header {
@@ -9,19 +7,19 @@ header {
   top: 0;
   box-sizing: border-box;
   font-family: Georgia, "Times New Roman", Times, serif;
+  height: 100px;
 
-  width: 100%;
   padding: 20px 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
-  background-color: #00203fff;
+  z-index: 1;
+  background-color: #ffcccb;
 }
 
 .logo {
   font-size: 2rem;
-  color: white;
+  color: #4a4a4a;
 }
 
 .navigation a {
@@ -29,7 +27,7 @@ header {
   font-size: 1.3 em;
   text-decoration: none;
   margin-left: 20px;
-  color: white;
+  color: #4a4a4a;
   font-weight: 300;
 }
 
@@ -38,7 +36,7 @@ header {
   position: absolute;
   width: 100%;
   height: 3px;
-  background: white;
+  background: #4a4a4a;
   border-radius: 5px;
   left: 0;
   bottom: -6px;

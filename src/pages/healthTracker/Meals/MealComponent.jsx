@@ -13,6 +13,8 @@ const MealComponent = ({ title, meals }) => {
     (state) => state.selectedIdDetails.selectedIdDetails.id
   );
 
+  console.log("mealdata from above", meals);
+
   const [mealData, setMealData] = useState([]);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -43,9 +45,9 @@ const MealComponent = ({ title, meals }) => {
 
   const calculateTotalEnergy = () => {
     let totalEnergy = 0;
-    if (mealData && mealData[title]) {
+    if (meals) {
       // Check both mealData and mealData[title]
-      mealData[title].forEach((foodItem) => {
+      meals.forEach((foodItem) => {
         totalEnergy += foodItem.energy || 0;
       });
       console.log("totalenrgy", totalEnergy);
@@ -53,9 +55,9 @@ const MealComponent = ({ title, meals }) => {
     return totalEnergy;
   };
 
-  useEffect(() => {
-    fetchFoodList();
-  }, [healthId, reloadKey]);
+  //useEffect(() => {
+  //  fetchFoodList();
+  //}, [healthId, reloadKey]);
 
   return (
     <div className="meal-card">
@@ -103,13 +105,13 @@ const MealComponent = ({ title, meals }) => {
       />
       {console.log("test", mealData[title])}
 
-      {mealData[title] &&
-        mealData[title].map((foodItem) => {
+      {meals &&
+        meals.map((foodItem) => {
           console.log("foodItem:", foodItem);
           return (
             <FoodList
-              key={foodItem.fdcId}
-              foodData={foodItem}
+              key={foodItem.foodId}
+              foodData={foodItem.energy}
               foodName={foodItem.foodName}
             />
           );
