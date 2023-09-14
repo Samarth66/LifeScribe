@@ -5,6 +5,8 @@ import MealComponent from "../Meals/MealComponent";
 import HealthCharts from "../healthCharts/HealthCharts";
 import "./HealthTrackerBody.css";
 import socket from "../../socket";
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+import ChatBot from "../../ChatBot/ChatBot";
 
 const HealthTrackerBody = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,9 @@ const HealthTrackerBody = () => {
   const [chartData, setChartData] = useState(null);
   const user = useSelector((state) => state.userDetails.userDetails);
   const userDetails = user.id;
+  const [showDialog, setShowDialog] = useState(true);
+  const [prompt, setPrompt] = useState("");
+  const [showChatBot, setShowChatBot] = useState(false);
 
   // useEffect(() => {
   //console.log("is it working?");
@@ -125,6 +130,40 @@ const HealthTrackerBody = () => {
     timeZone: "UTC", // Set the time zone to UTC
   });
 
+  const toggleChatBot = () => {
+    const mealsData = entry.meals;
+
+    // Convert the mealsData object into a string
+    let mealsString =
+      "Consider yourself as a nutritionist. In brief in less than 250 words, tell me the adjustments and recommendations for your diet:\n\n";
+
+    // Iterate through the meal categories
+    for (const mealCategory in mealsData) {
+      if (mealsData.hasOwnProperty(mealCategory)) {
+        mealsString += mealCategory + ":\n";
+
+        // Access properties within each meal category
+        const mealCategoryData = mealsData[mealCategory];
+
+        for (const mealName in mealCategoryData) {
+          if (mealCategoryData.hasOwnProperty(mealName)) {
+            const meal = mealCategoryData[mealName];
+            mealsString += `${mealName}, Protein: ${meal.protein}, Energy: ${meal.energy}, Carbohydrates: ${meal.carbohydrates}, Fats: ${meal.fats}, Sugar: ${meal.sugar}\n`;
+          }
+        }
+      }
+    }
+
+    // Add the total nutritional data
+    mealsString += "\nTotal callories of the dat:\n";
+    mealsString += `protein: ${mealsData.total.protein}, energy: ${mealsData.total.energy}, carbohydrates: ${mealsData.total.carbohydrates}, fats: ${mealsData.total.fats}, sugar: ${mealsData.total.sugar}\n`;
+
+    // Now you can set the formatted string as the prompt
+    setPrompt(mealsString);
+
+    setShowChatBot(!showChatBot);
+  };
+
   return (
     <div>
       <div className="selected-date">
@@ -149,6 +188,15 @@ const HealthTrackerBody = () => {
             />
           )}
         </div>
+      </div>
+      <div>
+        <svg
+          onClick={toggleChatBot}
+          style={{ position: "fixed", bottom: "20px", right: "20px" }}
+        >
+          {<SmartToyOutlinedIcon />}
+        </svg>
+        {showChatBot && <ChatBot prompt={prompt} />}
       </div>
     </div>
   );

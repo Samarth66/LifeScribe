@@ -6,6 +6,9 @@ import SpendingTrackerChart from "../spendingTrackerChart/SpendingTrackerChart";
 import SpendingOverlayForm from "../SpendingOverlayForm/SpendingOverlayForm";
 import socket from "../../socket";
 import SpendingCard from "../spendingTrackerCard/SpendingCard";
+import ChatBot from "../../ChatBot/ChatBot";
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+
 const SpendingTrackerBody = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails.userDetails);
@@ -22,6 +25,9 @@ const SpendingTrackerBody = () => {
   const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionAmount, setTransactionAmount] = useState("");
   const [spendingData, SetSpendingData] = useState("");
+  const [showDialog, setShowDialog] = useState(true);
+  const [prompt, setPrompt] = useState("");
+  const [showChatBot, setShowChatBot] = useState(false);
 
   const fetchSpendEntries = async (userId, date) => {
     try {
@@ -89,6 +95,26 @@ const SpendingTrackerBody = () => {
     }
   }, [userDetails, SpendingDate]);
 
+  const toggleChatBot = () => {
+    let spendingPrompt =
+      "act as an financial advisor, below ais my todays spending data, in brief analyze it and give me advise if required, "; // Initialize the spendingPrompt variable
+
+    for (const transaction of data.transactions) {
+      spendingPrompt +=
+        "ITEM: " +
+        `${transaction.name}" AMOUNT: $"${transaction.amount}" CATEGORY:" ${transaction.category}\n`;
+    }
+
+    console.log(spendingPrompt);
+    setPrompt(spendingPrompt);
+
+    // setPrompt(
+    //    "please in brief analyze my spending, and feel free to give me financial advice if you "
+    // );
+
+    setShowChatBot(!showChatBot);
+  };
+
   return (
     <div>
       <div className="spendingHeading">
@@ -138,6 +164,15 @@ const SpendingTrackerBody = () => {
             }}
           />
         )}
+      </div>
+      <div>
+        <svg
+          onClick={toggleChatBot}
+          style={{ position: "fixed", bottom: "20px", right: "20px" }}
+        >
+          {<SmartToyOutlinedIcon />}
+        </svg>
+        {showChatBot && <ChatBot prompt={prompt} />}
       </div>
     </div>
   );
