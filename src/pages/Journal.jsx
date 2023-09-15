@@ -44,13 +44,21 @@ const Journal = () => {
 
     setShowChatBot(!showChatBot);
   };
-
   useEffect(() => {
-    const journalBody = document.getElementById("journalBody");
-    const journalTitle = document.getElementById("journalTitle");
-    journalBody.value = selectedJournalDetails.description;
-    journalTitle.value = selectedJournalDetails.title;
-    setUpdateButton(1);
+    console.log("Effect triggered due to selectedJournalDetails change");
+
+    if (selectedJournalDetails.title) {
+      console.log("Setting title and description");
+      setTitle(selectedJournalDetails.title);
+      setDescription(selectedJournalDetails.description);
+      setUpdateButton(1);
+    } else {
+      console.log("Clearing title and description");
+      setTitle("");
+      setDescription("");
+      console.log(selectedJournalDetails, title, description);
+      //setUpdateButton(0);
+    }
   }, [selectedJournalDetails]);
 
   useEffect(() => {
@@ -62,22 +70,31 @@ const Journal = () => {
   }, [updateButton]);
 
   const id = userDetails.id;
-  console.log("id is", id);
+  console.log("id is", selectedJournalDetails);
 
-  useEffect(() => {}, [journalEntries]);
-
+  // Inside Journal.jsx
   useEffect(() => {
-    // Fetch journal entries for the specific user ID when the component mounts
-    console.log("journal entries", journalEntries);
+    const fetchEntries = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/journal-entries",
+          {
+            params: { userId: id },
+          }
+        );
+        dispatch({ type: "FETCH_JOURNAL_ENTRIES", payload: response.data });
+      } catch (error) {
+        console.log(error);
+        // Handle error
+      }
+    };
 
-    dispatch(fetchJournalEntries(id));
+    fetchEntries();
   }, [dispatch, id]);
 
   const handleClearData = () => {
-    const journalBody = document.getElementById("journalBody");
-    const journalTitle = document.getElementById("journalTitle");
-    journalBody.value = "";
-    journalTitle.value = "";
+    setTitle("");
+    setDescription("");
     setUpdateButton(0);
   };
 
@@ -139,24 +156,8 @@ const Journal = () => {
     }
   }
 
-  const fetchJournalEntries = (id) => async (dispatch) => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8000/journal-entries",
-        {
-          params: { userId: id }, // Pass the user ID as a query parameter
-        }
-      );
-
-      dispatch({ type: "FETCH_JOURNAL_ENTRIES", payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <div>
-      fetchJournalEntries(id);
       <div>
         <Header />
       </div>
@@ -170,21 +171,19 @@ const Journal = () => {
             <input
               type="text"
               className="journalTitle"
-              id="journalTitle"
               placeholder="Enter Title"
-              onChange={(event) => {
-                setTitle(event.target.value);
-              }}
+              value={title} // controlled value
+              onChange={(event) => setTitle(event.target.value)}
             />
+
             <br />
             <textarea
               className="journalBody"
-              id="journalBody"
               placeholder="Writing is a journey to self-discovery"
-              onChange={(event) => {
-                setDescription(event.target.value);
-              }}
+              value={description} // controlled value
+              onChange={(event) => setDescription(event.target.value)}
             />
+
             <br />
             <input
               className="submitButton journalSubmit"

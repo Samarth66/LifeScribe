@@ -26,7 +26,32 @@ function journalRoutes(io) {
     }
   });
 
-  // Chatbot route
+  router.delete("/delete-journal-entry", async (req, res) => {
+    const entryId = req.query.postId;
+    console.log(entryId);
+
+    if (!entryId) {
+      return res
+        .status(400)
+        .json({ message: "Missing postId query parameter" });
+    }
+
+    try {
+      // Use Mongoose to find and delete the entry by ID
+      const deletedEntry = await journalDetail.findByIdAndDelete(entryId);
+
+      if (!deletedEntry) {
+        return res.status(404).json({ message: "Entry not found" });
+      }
+
+      io.emit("entryDeleted", entryId); // Emit an event to notify clients
+
+      res.json({ message: "Entry deleted successfully", deletedEntry });
+    } catch (error) {
+      console.log("Error in deleting entry", error);
+      res.status(500).send(error);
+    }
+  });
 
   router.post("/ask", async (req, res) => {
     try {
@@ -49,12 +74,12 @@ function journalRoutes(io) {
         },
         {
           headers: {
-            Authorization: `Bearer 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`, // Replace with your API key
+            Authorization: `Bearer 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`,
           },
         }
       );
       console.log(response);
-      res.send(response.data.choices[0].message.content.trim()); // Updated line
+      res.send(response.data.choices[0].message.content.trim());
     } catch (error) {
       console.log("Error in OpenAI API call", error);
       res.status(500).send(error);

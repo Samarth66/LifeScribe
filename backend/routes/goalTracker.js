@@ -124,6 +124,24 @@ function goalTracker(io) {
       console.log("updating card failed", e);
     }
   });
+
+  router.delete("/delete-board-entry", async (req, res) => {
+    const boardId = req.query.boardId;
+
+    try {
+      const deletedBoard = await Board.findByIdAndDelete(boardId);
+
+      if (!deletedBoard) {
+        return res.status(404).json({ message: "Board not found" });
+      }
+      io.emit("boardDeleted");
+      res.json({ message: "Board deleted successfully", deletedBoard });
+    } catch (error) {
+      console.log("Error in deleting board entry", error);
+      res.status(500).send(error);
+    }
+  });
+
   return router;
 }
 

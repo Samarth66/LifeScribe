@@ -54,13 +54,18 @@ const selectedBoardDetailsReducer = (
   action
 ) => {
   switch (action.type) {
-    case "SELECTED_JOURNAL_DETAIL":
+    case "SELECTED_BOARD_DETAIL":
       return {
         ...state,
         board: {
           boardId: action.payload._id,
           title: action.payload.title,
         },
+      };
+    case "RESET_SELECTED_BOARD_DETAILS":
+      return {
+        ...state,
+        board: {},
       };
     default:
       return state;
@@ -127,9 +132,15 @@ const selectedJournalDetailsReducer = (
           id: action.payload.id,
           title: action.payload.title,
           description: action.payload.description,
-          data: action.payload.date,
+          date: action.payload.date, // typo fix, it was 'data'
         },
       };
+    case "RESET_SELECTED_JOURNAL_DETAILS":
+      return {
+        ...state,
+        selectedJournalDetails: {}, // Or whatever your initial state should be
+      };
+
     default:
       return state;
   }
@@ -162,6 +173,14 @@ const journalReducer = (state = initialState, action) => {
         ...state,
         journalEntries: action.payload,
       };
+    case "DELETE_JOURNAL_ENTRY":
+      const updatedJournalEntries = state.journalEntries.filter(
+        (entry) => entry._id !== action.payload
+      );
+      return {
+        ...state,
+        journalEntries: updatedJournalEntries,
+      };
     default:
       return state;
   }
@@ -180,6 +199,16 @@ const boardReducer = (state = initialBoard, action) => {
         ...state,
         boardEntries: [...state.boardEntries, action.payload],
       };
+    case "DELETE_BOARD_ENTRY":
+      console.log(state.boardEntries);
+      const updatedBoards = state.boardEntries.filter(
+        (entry) => entry._id !== action.payload
+      );
+      return {
+        ...state,
+        boardEntries: updatedBoards,
+      };
+
     default:
       return state;
   }

@@ -5,7 +5,6 @@ import SidebarTitles from "./SidebarTitles";
 import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = ({ onClearData }) => {
-  const [sideEntries, setSideEntries] = useState([]);
   const journalEntries = useSelector((state) => state.journal.journalEntries);
 
   const userDetails = useSelector((state) => state.userDetails.userDetails);

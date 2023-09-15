@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/SidebarTitles.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const SidebarTitles = (props) => {
+  const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const selectedJournalDetails = useSelector(
     (state) => state.journalDetails.selectedJournalDetails
@@ -12,9 +15,34 @@ const SidebarTitles = (props) => {
 
   const handleClick = () => {
     const currentId = props.id;
-    console.log("current id", props.id, props.title);
-
     fetchSelectedJournalDetails(currentId, dispatch);
+  };
+
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDelete = async (event) => {
+    event.stopPropagation();
+    handleMenuClose();
+    // Add your delete logic here. For example:
+    try {
+      await axios.delete("http://localhost:8000/delete-journal-entry", {
+        params: {
+          postId: props.id,
+        },
+      });
+      // Dispatch an action to update the state or re-fetch data
+      dispatch({ type: "DELETE_JOURNAL_ENTRY", payload: props.id });
+      dispatch({ type: "RESET_SELECTED_JOURNAL_DETAILS" });
+      console.log("after dispatch", selectedJournalDetails);
+    } catch (error) {
+      console.log("cannot delete journal entry", error);
+    }
   };
 
   const fetchSelectedJournalDetails = async (id, dispatch) => {
@@ -49,7 +77,14 @@ const SidebarTitles = (props) => {
         <p className="title">{props.title}</p>
         <p className="date">{props.date}</p>
       </div>
-      <MoreVertIcon className="threeDots"></MoreVertIcon>
+      <MoreVertIcon className="threeDots" onClick={handleMenuClick} />
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleDelete}>Delete</MenuItem>
+      </Menu>
     </div>
   );
 };
