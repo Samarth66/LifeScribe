@@ -72,6 +72,22 @@ function healthTracker(io) {
       2
     );
   };
+  const subtractTotalNutrients = (meal, totalNutrients) => {
+    totalNutrients.protein = (
+      totalNutrients.protein - (meal.protein || 0)
+    ).toFixed(2);
+    totalNutrients.energy = (
+      totalNutrients.energy - (meal.energy || 0)
+    ).toFixed(2);
+    totalNutrients.carbohydrates = (
+      totalNutrients.carbohydrates - (meal.carbohydrates || 0)
+    ).toFixed(2);
+    totalNutrients.fats = (totalNutrients.fats - (meal.fats || 0)).toFixed(2);
+    totalNutrients.sugar = (totalNutrients.sugar - (meal.sugar || 0)).toFixed(
+      2
+    );
+  };
+
   router.get("/health-dashboard-entries", async (req, res) => {
     try {
       const { userId } = req.query;
@@ -104,6 +120,37 @@ function healthTracker(io) {
     } catch (error) {
       console.error("Error adding meal:", error);
       res.status(500).json({ error: "Error adding meal" });
+    }
+  });
+
+  router.delete("/delete-meal", async (req, res) => {
+    try {
+      const { healthId, mealType, foodId } = req.body;
+
+      const existingEntry = await HealthEntry.findById(healthId);
+      if (!existingEntry) {
+        return res.status(404).json({ error: "Health entry not found" });
+      }
+
+      const mealsArray = existingEntry.meals[mealType];
+      const mealToDelete = mealsArray.find((item) => item.foodId === foodId);
+
+      if (mealToDelete) {
+        subtractTotalNutrients(mealToDelete, existingEntry.meals.total);
+      }
+
+      const updatedMealsArray = mealsArray.filter(
+        (item) => item.foodId !== foodId
+      );
+
+      existingEntry.meals[mealType] = updatedMealsArray;
+
+      await existingEntry.save();
+      res.status(200).json({ message: "Meal deleted successfully" });
+      io.emit("meal-updated");
+    } catch (error) {
+      console.error("Error deleting meal:", error);
+      res.status(500).json({ error: "Error deleting meal" });
     }
   });
 

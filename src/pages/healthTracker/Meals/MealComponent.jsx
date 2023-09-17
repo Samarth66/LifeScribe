@@ -58,6 +58,17 @@ const MealComponent = ({ title, meals }) => {
   //useEffect(() => {
   //  fetchFoodList();
   //}, [healthId, reloadKey]);
+  const deleteFoodItem = async (foodName, foodId) => {
+    try {
+      // Make an API call to delete the food item
+      await axios.delete("http://localhost:8000/delete-meal", {
+        data: { healthId, mealType: title.toLowerCase(), foodId },
+      });
+      console.log("del");
+    } catch (error) {
+      console.error("Failed to delete food item:", error);
+    }
+  };
 
   return (
     <div className="meal-card">
@@ -111,8 +122,10 @@ const MealComponent = ({ title, meals }) => {
           return (
             <FoodList
               key={foodItem.foodId}
+              foodId={foodItem.foodId}
               foodData={foodItem.energy}
               foodName={foodItem.foodName}
+              onDelete={deleteFoodItem}
             />
           );
         })}

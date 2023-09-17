@@ -10,13 +10,24 @@ function goalTracker(io) {
         title: req.body.title,
         listId: req.body.listId,
       };
-      const newEntry = await Card.create(data);
+
+      const newCard = await Card.create(data);
+
+      const list = await List.findById(req.body.listId);
+
+      if (!list) {
+        return res.status(404).json({ message: "List not found" });
+      }
+
+      list.cards.push(newCard._id);
+      await list.save();
 
       res
         .status(200)
-        .json({ message: "Card added successfully", card: newEntry });
+        .json({ message: "Card added successfully", card: newCard });
     } catch (e) {
-      console.log("failed to add card data to database");
+      console.log("Failed to add card data to database", e);
+      res.status(500).json({ message: "Failed to add card" });
     }
   });
 
@@ -104,24 +115,111 @@ function goalTracker(io) {
     try {
       const { id } = req.query;
 
+      const card = await Card.findById(id);
+
+      if (!card) {
+        return res.status(404).json({ message: "Card not found" });
+      }
+
+      const list = await List.findOne({ _id: card.listId });
+
+      if (!list) {
+        return res.status(404).json({ message: "List not found" });
+      }
+
+      list.cards = list.cards.filter((cardId) => cardId.toString() !== id);
+      await list.save();
+
       await Card.findByIdAndDelete(id);
+
       io.emit("cardDeleted");
       res.status(200).json({ message: "Card deleted successfully" });
     } catch (e) {
-      console.log("card deletion failed", e);
+      console.log("Card deletion failed", e);
+      res.status(500).json({ message: "Card deletion failed" });
     }
   });
 
   router.post("/update-cards", async (req, res) => {
     try {
       const { cardId, newParentListId } = req.body;
-      console.log("cardS", cardId);
-      await Card.findByIdAndUpdate(cardId, { listId: newParentListId });
-      console.log("success");
+
+      const card = await Card.findById(cardId);
+
+      if (!card) {
+        return res.status(404).json({ message: "Card not found" });
+      }
+
+      const oldList = await List.findOne({ _id: card.listId });
+
+      if (!oldList) {
+        return res.status(404).json({ message: "Old list not found" });
+      }
+
+      oldList.cards = oldList.cards.filter(
+        (id) => id.toString() !== cardId.toString()
+      );
+      await oldList.save();
+
+      card.listId = newParentListId;
+      await card.save();
+
+      const newList = await List.findOne({ _id: newParentListId });
+
+      if (!newList) {
+        return res.status(404).json({ message: "New list not found" });
+      }
+
+      newList.cards.push(cardId);
+      await newList.save();
 
       res.status(200).json({ message: "Card's list updated successfully." });
     } catch (e) {
-      console.log("updating card failed", e);
+      console.log("Updating card failed", e);
+      res.status(500).json({ message: "Card's list update failed" });
+    }
+  });
+  router.get("/count-cards-in-lists", async (req, res) => {
+    try {
+      const { userId } = req.query;
+
+      // Find all boards belonging to the user
+      const boards = await Board.find({ userId });
+
+      // Initialize counts for each list
+      let todoCount = 0;
+      let inProgressCount = 0;
+      let completedCount = 0;
+
+      // Loop through each board
+      for (const board of boards) {
+        // Find the lists for the current board
+        const lists = await List.find({ boardId: board._id });
+
+        // Loop through each list and count the cards
+
+        for (const list of lists) {
+          if (list.title === "To Do") {
+            todoCount += list.cards.length;
+          } else if (list.title === "In Process") {
+            inProgressCount += list.cards.length;
+          } else if (list.title === "Done") {
+            completedCount += list.cards.length;
+          }
+        }
+      }
+
+      console.log(todoCount, inProgressCount, completedCount);
+
+      // Return the counts
+      res.status(200).json({
+        todoCount,
+        inProgressCount,
+        completedCount,
+      });
+    } catch (e) {
+      console.log("Failed to count cards in lists", e);
+      res.status(500).json({ message: "Failed to count cards in lists" });
     }
   });
 

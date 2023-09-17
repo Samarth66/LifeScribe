@@ -95,6 +95,30 @@ const SpendingTrackerBody = () => {
     }
   }, [userDetails, SpendingDate]);
 
+  const handleDeleteTransaction = async (transactionId) => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:8000/delete-transaction",
+        {
+          params: {
+            userId: userDetails,
+            date: SpendingDate,
+            id: transactionId,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Successfully deleted transaction");
+        fetchSpendEntries(userDetails, SpendingDate);
+      } else {
+        console.log("Failed to delete transaction");
+      }
+    } catch (e) {
+      console.log("Error deleting transaction:", e);
+    }
+  };
+
   const toggleChatBot = () => {
     let spendingPrompt =
       "act as an financial advisor, below ais my todays spending data, in brief analyze it and give me advise if required, "; // Initialize the spendingPrompt variable
@@ -134,14 +158,14 @@ const SpendingTrackerBody = () => {
             {data.transactions ? (
               data.transactions.map((transaction, index) => (
                 <div key={index}>
-                  {/* Add more details here */}
-
                   <SpendingCard
                     key={index}
                     index={index}
+                    id={transaction.id}
                     name={transaction.name}
                     category={transaction.category}
                     amount={transaction.amount}
+                    handleDeleteTransaction={handleDeleteTransaction} // Pass the function here
                   />
                 </div>
               ))

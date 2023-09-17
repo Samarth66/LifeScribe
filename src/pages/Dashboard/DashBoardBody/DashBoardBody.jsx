@@ -17,6 +17,9 @@ const DashboardBody = () => {
   const [last7Days, setLast7DaysData] = useState([]);
   const dates = Object.keys(healthData);
   const [numOfDays, setNumOfDays] = useState(7);
+  const [todo, setTodo] = useState(0);
+  const [inProgress, setInProgress] = useState(0);
+  const [completed, setCompleted] = useState(0);
 
   const fetchJournalEntries = async (id, days) => {
     try {
@@ -51,6 +54,26 @@ const DashboardBody = () => {
       setLatestJournalEntry(latestEntry ? latestEntry.entry : ""); // Check if latestEntry is null
     } catch (error) {
       console.log(error);
+    }
+  };
+  const fetchCardCounts = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/count-cards-in-lists?userId=${userId}`
+      );
+
+      const { todoCount, inProgressCount, completedCount } = response.data;
+
+      setTodo(todoCount);
+      setInProgress(inProgressCount);
+      setCompleted(completedCount);
+      console.log(response.data, "dsadas");
+      setTodo(todoCount);
+      setInProgress(inProgressCount);
+      setCompleted(completedCount);
+      console.log("tttt", todo, inProgress, completedCount);
+    } catch (error) {
+      console.error("Failed to fetch card counts:", error);
     }
   };
 
@@ -167,6 +190,7 @@ const DashboardBody = () => {
     fetchJournalEntries(userId, numOfDays);
     fetchHealthEntries(userId, numOfDays);
     fetchSpendingEntries(userId, numOfDays);
+    fetchCardCounts();
   }, [numOfDays]);
 
   const formattedDate = new Date().toISOString().split("T")[0];
@@ -227,6 +251,9 @@ const DashboardBody = () => {
 
           <div className="dashboard-item goal-tracker">
             <h2>Goal Tracker</h2>
+            <p>Tasks yet to start: {todo}</p>
+            <p>TTasks in Progress: {inProgress}</p>
+            <p>Tasks Completed: {completed}</p>
           </div>
         </div>
         <div className="dashboard-grid-2">

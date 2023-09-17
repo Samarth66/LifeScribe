@@ -1,9 +1,8 @@
 import React from "react";
-import "./SpendingCard";
+import DeleteIcon from "@mui/icons-material/Delete"; // Import DeleteIcon
 
 const SpendingCard = (props) => {
-  //.log(name, category, amount);
-  const { index, name, category, amount } = props;
+  const { index, name, id, category, amount, handleDeleteTransaction } = props; // add handleDeleteTransaction
 
   return (
     <div className="transaction-card">
@@ -11,6 +10,11 @@ const SpendingCard = (props) => {
       <p>Name: {name}</p>
       <p>Category: {category}</p>
       <p>Amount: ${amount}</p>
+      <button onClick={() => handleDeleteTransaction(id)}>
+        {" "}
+        {/* Add Delete Button */}
+        <DeleteIcon />
+      </button>
     </div>
   );
 };
