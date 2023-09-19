@@ -71,7 +71,7 @@ function GoalTrackerSidebar() {
   return (
     <div>
       <Header />
-      fetchBoardEntries(id);
+
       <div className="sidebar">
         <p className="name">
           {userDetails.name.charAt(0).toUpperCase() +

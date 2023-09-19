@@ -114,7 +114,7 @@ function healthTracker(io) {
       updateTotalNutrients(nutrientData, existingEntry.meals.total);
 
       await existingEntry.save();
-      io.emit("meal-updated");
+      io.to(userId).emit("meal-updated");
 
       res.status(200).json({ message: "Meal added successfully" });
     } catch (error) {
@@ -125,7 +125,7 @@ function healthTracker(io) {
 
   router.delete("/delete-meal", async (req, res) => {
     try {
-      const { healthId, mealType, foodId } = req.body;
+      const { userId, healthId, mealType, foodId } = req.body;
 
       const existingEntry = await HealthEntry.findById(healthId);
       if (!existingEntry) {
@@ -147,7 +147,7 @@ function healthTracker(io) {
 
       await existingEntry.save();
       res.status(200).json({ message: "Meal deleted successfully" });
-      io.emit("meal-updated");
+      io.to(userId).emit("meal-updated");
     } catch (error) {
       console.error("Error deleting meal:", error);
       res.status(500).json({ error: "Error deleting meal" });

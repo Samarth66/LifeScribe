@@ -42,7 +42,9 @@ router.put("/journal-update", async (req, res) => {
       { _id: journalId },
       { description: updatedJournalDescription, title: updatedJournalTitle }
     );
+    res.json({ message: "failed to add journal" });
   } catch (e) {
     console.log("Cannot update the function new journal in database", e);
+    res.json({ message: "failed to add journal" });
   }
 });

@@ -13,7 +13,7 @@ const ChatBot = (props) => {
     setChatHistory([
       {
         type: "bot",
-        text: "Please click on 'Send' to see books and articles related to your journal entry.",
+        text: props.gptMessage,
       },
     ]);
     setIsSubmitted(true);

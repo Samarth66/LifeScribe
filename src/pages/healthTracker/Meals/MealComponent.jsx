@@ -8,6 +8,7 @@ import FoodList from "../healthTrackerFoodList/FoodList";
 import Chart from "chart.js/auto";
 
 const MealComponent = ({ title, meals }) => {
+  const userId = useSelector((state) => state.userDetails.userDetails).id;
   const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const healthId = useSelector(
     (state) => state.selectedIdDetails.selectedIdDetails.id
@@ -62,7 +63,7 @@ const MealComponent = ({ title, meals }) => {
     try {
       // Make an API call to delete the food item
       await axios.delete("http://localhost:8000/delete-meal", {
-        data: { healthId, mealType: title.toLowerCase(), foodId },
+        data: { userId, healthId, mealType: title.toLowerCase(), foodId },
       });
       console.log("del");
     } catch (error) {

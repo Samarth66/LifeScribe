@@ -106,7 +106,6 @@ function spendingTrackerEntries(io) {
       userTransactions.total = newTotal;
 
       const updatedUserTransactions = await userTransactions.save();
-      io.emit("meal-updated");
 
       res.status(201).json(updatedUserTransactions);
     } catch (error) {

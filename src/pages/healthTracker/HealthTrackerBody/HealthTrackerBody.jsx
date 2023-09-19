@@ -25,6 +25,8 @@ const HealthTrackerBody = () => {
   const [showDialog, setShowDialog] = useState(true);
   const [prompt, setPrompt] = useState("");
   const [showChatBot, setShowChatBot] = useState(false);
+  const gptMessage =
+    "Click 'Send' to discover dietary modifications and receive recommendations.";
 
   // useEffect(() => {
   //console.log("is it working?");
@@ -135,7 +137,7 @@ const HealthTrackerBody = () => {
 
     // Convert the mealsData object into a string
     let mealsString =
-      "Consider yourself as a nutritionist. In brief in less than 250 words, tell me the adjustments and recommendations for your diet:\n\n";
+      "Imagine yourself as a nutrition expert. In a concise response of fewer than 250 words, outline the dietary modifications and suggestions you would propose for my diet:\n\n";
 
     // Iterate through the meal categories
     for (const mealCategory in mealsData) {
@@ -196,7 +198,7 @@ const HealthTrackerBody = () => {
         >
           {<SmartToyOutlinedIcon />}
         </svg>
-        {showChatBot && <ChatBot prompt={prompt} />}
+        {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
       </div>
     </div>
   );

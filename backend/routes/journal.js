@@ -17,17 +17,19 @@ function journalRoutes(io) {
 
     try {
       const newEntry = await journalDetail.insertMany([data]);
-      io.emit("newEntry", data);
+      const userId = req.body.id;
+      io.to(userId).emit("newEntry", data);
       console.log("entry added", newEntry[0]._id);
       res.json(newEntry);
     } catch (error) {
       console.log("error in adding data");
-      res.status(500).send(error);
+      res.status(500).json({ message: "Failed to add new entry" });
     }
   });
 
   router.delete("/delete-journal-entry", async (req, res) => {
     const entryId = req.query.postId;
+    const userId = req.query.userId;
     console.log(entryId);
 
     if (!entryId) {
@@ -44,12 +46,12 @@ function journalRoutes(io) {
         return res.status(404).json({ message: "Entry not found" });
       }
 
-      io.emit("entryDeleted", entryId); // Emit an event to notify clients
+      io.to(userId).emit("entryDeleted", entryId);
 
       res.json({ message: "Entry deleted successfully", deletedEntry });
     } catch (error) {
       console.log("Error in deleting entry", error);
-      res.status(500).send(error);
+      res.status(500).json({ message: "Failed to delete entrys" });
     }
   });
 

@@ -73,12 +73,28 @@
 
 .switch-button {
   padding: 10px 20px;
-  color: #fff;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 
 .switch-button:hover {
+  background-color: #0056b3;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.loginButton:hover {
   background-color: #0056b3;
 }

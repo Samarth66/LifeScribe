@@ -113,7 +113,8 @@ function goalTracker(io) {
 
   router.delete("/delete-cards", async (req, res) => {
     try {
-      const { id } = req.query;
+      const { id, userId } = req.query;
+      console.log(userId);
 
       const card = await Card.findById(id);
 
@@ -132,7 +133,7 @@ function goalTracker(io) {
 
       await Card.findByIdAndDelete(id);
 
-      io.emit("cardDeleted");
+      io.to(userId).emit("cardDeleted");
       res.status(200).json({ message: "Card deleted successfully" });
     } catch (e) {
       console.log("Card deletion failed", e);
@@ -224,7 +225,7 @@ function goalTracker(io) {
   });
 
   router.delete("/delete-board-entry", async (req, res) => {
-    const boardId = req.query.boardId;
+    const { boardId, userId } = req.query;
 
     try {
       const deletedBoard = await Board.findByIdAndDelete(boardId);
@@ -232,7 +233,7 @@ function goalTracker(io) {
       if (!deletedBoard) {
         return res.status(404).json({ message: "Board not found" });
       }
-      io.emit("boardDeleted");
+      io.to(userId).emit("boardDeleted");
       res.json({ message: "Board deleted successfully", deletedBoard });
     } catch (error) {
       console.log("Error in deleting board entry", error);

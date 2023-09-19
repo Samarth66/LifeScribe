@@ -7,6 +7,8 @@ import GoalLists from "./GoalLists";
 import axios from "axios";
 import socket from "./socket";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+import ChatBot from "./ChatBot/ChatBot";
 
 const GoalTracker = () => {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -18,6 +20,9 @@ const GoalTracker = () => {
   const [forceUpdate, setForceUpdate] = useState(false);
 
   const [cardEntries, setCardEntries] = useState([]);
+  const [showChatBot, setShowChatBot] = useState(false);
+  const [prompt, setPrompt] = useState("");
+  const [listData, setListData] = useState({});
 
   /* useEffect(() => {
     // Log a message when the socket is connected
@@ -29,6 +34,25 @@ const GoalTracker = () => {
     return () => socket.disconnect();
   }, []);
   */
+  const gptMessage =
+    "Kindly select 'send' to receive a personalized schedule to complete tasks";
+
+  const toggleChatBot = () => {
+    const formattedListData = Object.entries(listData)
+      .map(([listName, cardNames]) => {
+        return `${listName}: ${cardNames}`;
+      })
+      .join("\n");
+
+    const s =
+      "Assist me in structuring my day for optimal task completion." +
+      formattedListData;
+    console.log(formattedListData);
+    // Initialize the spendingPrompt variable
+    setPrompt(s);
+
+    setShowChatBot(!showChatBot);
+  };
 
   const fetchData = async () => {
     try {
@@ -37,17 +61,41 @@ const GoalTracker = () => {
           boardId: selectedBoardDetails.boardId,
         },
       });
-      setCardEntries(response.data);
+
       setFetchedList(response.data);
-      console.log(response.data, "response");
+
+      await Promise.all(
+        response.data.map(async (list) => {
+          const cards = await axios.get("http://localhost:8000/fetch-cards", {
+            params: {
+              listId: list._id,
+            },
+          });
+
+          // Extract card titles
+          const cardNames = cards.data.map((card) => card.title);
+
+          // Store list name and associated card names in the format "listname=cardnames"
+          setListData((prevData) => ({
+            ...prevData,
+            [list.title]: cardNames.join(","),
+          }));
+
+          return list;
+        })
+      );
+
+      // Now listData in the component's state contains the desired format
+      console.log("Formatted list data:", listData);
     } catch {
-      console.log("not able to retrieve anything");
+      console.log("Not able to retrieve anything");
     }
   };
 
   useEffect(() => {
     console.log("this is the selected board", selectedBoardDetails);
     fetchData();
+    console.log(listData, "ddd");
   }, [selectedBoardDetails]);
 
   const handleDragEnd = async (result) => {
@@ -100,6 +148,15 @@ const GoalTracker = () => {
               )}
             </Droppable>
           ))}
+        </div>
+        <div>
+          <svg
+            onClick={toggleChatBot}
+            style={{ position: "fixed", bottom: "20px", right: "20px" }}
+          >
+            {<SmartToyOutlinedIcon />}
+          </svg>
+          {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
         </div>
       </div>
     </DragDropContext>

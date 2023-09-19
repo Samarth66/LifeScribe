@@ -11,6 +11,7 @@ function BoardItems(props) {
   const dispatch = useDispatch();
   const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
   const boardEntries = useSelector((state) => state.board.boardEntries);
+  const userId = useSelector((state) => state.userDetails.userDetails).id;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -27,7 +28,7 @@ function BoardItems(props) {
     // Add your delete logic here. For example:
     try {
       await axios.delete("http://localhost:8000/delete-board-entry", {
-        params: { boardId: props.id },
+        params: { boardId: props.id, userId: userId },
       });
 
       // Dispatch an action to update the state or re-fetch data

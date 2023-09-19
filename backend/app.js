@@ -5,6 +5,7 @@ const loginDetail = require("./mongo");
 const cors = require("cors");
 const app = express();
 const http = require("http");
+const bcrypt = require("bcrypt");
 
 const server = http.createServer(app);
 const passport = require("passport");
@@ -52,7 +53,6 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new LocalStrategy(
     {
-      // Customize field names based on your front-end form
       usernameField: "email",
       passwordField: "password",
     },
@@ -64,11 +64,13 @@ passport.use(
           return done(null, false, { name: "User not found" });
         }
 
-        if (user.password !== password) {
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
           return done(null, false, { name: "Incorrect password" });
         }
 
-        console.log("came here", user.id);
+        console.log("User found and password is correct", user.id);
 
         io.to(user.id).emit("joinRoom", user.id);
 

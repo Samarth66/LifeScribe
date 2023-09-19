@@ -51,7 +51,7 @@ const DashboardBody = () => {
 
       setJournalData(allJournalData);
       setEntriesInLastWeek(entriesInLastWeek.length);
-      setLatestJournalEntry(latestEntry ? latestEntry.entry : ""); // Check if latestEntry is null
+      setLatestJournalEntry(latestEntry ? latestEntry.entry : "");
     } catch (error) {
       console.log(error);
     }
@@ -252,7 +252,7 @@ const DashboardBody = () => {
           <div className="dashboard-item goal-tracker">
             <h2>Goal Tracker</h2>
             <p>Tasks yet to start: {todo}</p>
-            <p>TTasks in Progress: {inProgress}</p>
+            <p>Tasks in Progress: {inProgress}</p>
             <p>Tasks Completed: {completed}</p>
           </div>
         </div>

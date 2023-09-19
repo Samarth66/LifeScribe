@@ -1,28 +1,38 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
+const uuid = require("uuid");
 const loginDetail = require("../mongo");
 
 router.post("/signup", async (req, res) => {
-  const { id, name, email, password } = req.body;
-
-  const data = {
-    id: id,
-    name: name,
-    email: email,
-    password: password,
-  };
+  const { name, email, password } = req.body;
 
   try {
-    const check = await loginDetail.findOne({ email: email });
-
-    if (check) {
-      res.json("exist");
-    } else {
-      res.json({ status: "notexist" });
-      await loginDetail.insertMany([data]);
+    // Check if the email already exists
+    const existingUser = await loginDetail.findOne({ email });
+    if (existingUser) {
+      // Don't reveal if the email already exists
+      return res.json({ status: "error" });
     }
-  } catch (e) {
-    res.json({ status: "notexist" });
+
+    // Hash and salt the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newUser = {
+      id: uuid.v4(),
+      name,
+      email,
+      password: hashedPassword,
+    };
+
+    // Insert the new user into the database
+    await loginDetail.insertMany([newUser]);
+
+    return res.json({ status: "success", name });
+  } catch (error) {
+    console.error("Error during signup:", error);
+    return res.status(500).json({ status: "error" });
   }
 });
 

@@ -1,11 +1,11 @@
 import React from "react";
-import "../css/Login.css";
+import "../css/LoginHeader.css";
 
 const LoginHeader = () => {
   return (
     <div>
       <header>
-        <h2 className="logo">Logo</h2>
+        <h2 className="logo">LifeScribe</h2>
         <nav className="navigation">
           <a href="#">Home</a>
           <a href="#">About</a>

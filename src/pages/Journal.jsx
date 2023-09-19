@@ -32,6 +32,8 @@ const Journal = () => {
   const [keywords, setKeywords] = useState([]);
   const [showDialog, setShowDialog] = useState(true);
   const [prompt, setPrompt] = useState("");
+  const gptMessage =
+    "Please click on 'Send' to see books and articles related to your journal entry.";
 
   const toggleChatBot = () => {
     const wordlist = rake(description);
@@ -82,6 +84,8 @@ const Journal = () => {
             params: { userId: id },
           }
         );
+        setUpdateButton(0);
+
         dispatch({ type: "FETCH_JOURNAL_ENTRIES", payload: response.data });
       } catch (error) {
         console.log(error);
@@ -131,12 +135,19 @@ const Journal = () => {
         const jEntry = {
           _id: newEntry.data[0]._id,
           title: newEntry.data[0].title,
+
           date: newEntry.data[0].date,
         };
 
-        console.log("adding", jEntry);
+        const jDetails = {
+          id: newEntry.data[0]._id,
+          title: newEntry.data[0].title,
+          description: newEntry.data[0].description,
+          date: newEntry.data[0].date,
+        };
+        console.log("this will be added to redux", jDetails);
 
-        console.log("this will be added to redux", jEntry);
+        dispatch({ type: "GET_JOURNAL_DETAILS", payload: jDetails });
 
         dispatch({ type: "ADD_ENTRY", payload: jEntry });
       } catch {
@@ -193,10 +204,6 @@ const Journal = () => {
             />
           </form>
           <div className="chat">
-            <div className={`dialog-box ${showDialog ? "show" : ""}`}>
-              Interested in discovering books and articles that align with your
-              journal entries?
-            </div>
             <div>
               <svg
                 onClick={toggleChatBot}
@@ -204,7 +211,9 @@ const Journal = () => {
               >
                 {<SmartToyOutlinedIcon />}
               </svg>
-              {showChatBot && <ChatBot prompt={prompt} />}
+              {showChatBot && (
+                <ChatBot prompt={prompt} gptMessage={gptMessage} />
+              )}
             </div>
           </div>
         </div>

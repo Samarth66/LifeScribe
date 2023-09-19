@@ -7,6 +7,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 const SidebarTitles = (props) => {
+  const user = useSelector((state) => state.userDetails.userDetails);
+  const userId = user.id;
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const selectedJournalDetails = useSelector(
@@ -34,6 +36,7 @@ const SidebarTitles = (props) => {
       await axios.delete("http://localhost:8000/delete-journal-entry", {
         params: {
           postId: props.id,
+          userId: userId,
         },
       });
       // Dispatch an action to update the state or re-fetch data

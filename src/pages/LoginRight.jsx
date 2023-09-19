@@ -8,81 +8,93 @@ import { useDispatch, useSelector } from "react-redux";
 const initializeSocket = require("./socket");
 
 const LoginRight = () => {
+  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+
   const userDetails = useSelector((state) => state.userDetails.userDetails);
   const dispatch = useDispatch();
+  const history = useNavigate();
 
   useEffect(() => {}, [userDetails]);
 
-  const history = useNavigate();
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+  };
 
-  async function submit(e) {
+  const submit = async (e) => {
     e.preventDefault();
 
-    try {
-      await axios
-        .post("http://localhost:8000/", {
-          email,
-          password,
-        })
-        .then((res) => {
-          const resData = res.data;
-          console.log(resData.status);
-          if (resData.status == "exist") {
+    let url = isLogin
+      ? "http://localhost:8000/"
+      : "http://localhost:8000/signup";
+    let data = isLogin
+      ? { email, password }
+      : { id: uuidv4(), name, email, password };
+
+    await axios
+      .post(url, data)
+      .then((res) => {
+        const resData = res.data;
+
+        if (isLogin) {
+          if (resData.status === "exist") {
             const userData = {
               id: resData.id,
               name: resData.name,
             };
-            socket.emit("joinRoom", userData.id);
-            socket.on("messageFromServer", (message) => {
-              console.log("Received message from server:", message);
-            });
             dispatch({ type: "SET_USER_DETAILS", payload: userData });
-
-            history("/journal", {
-              state: { name: resData.name, id: resData.id },
-            });
-          } else if (resData.status == "notexist") {
-            alert("user doesn't exists");
-          } else if (resData.status == "incorrectPassword") {
-            alert("Please enter correct password");
+            history("/dashboard");
+          } else if (resData.status === "notexist") {
+            alert("User doesn't exist");
+          } else if (resData.status === "incorrectPassword") {
+            alert("Please enter the correct password");
           }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    } catch {
-      console.log(e);
-    }
-  }
+        } else {
+          if (resData.status === "exist") {
+            alert("User already exists");
+          } else if (resData.status === "notexist") {
+            setIsLogin(true);
+          }
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div>
-      <form className="form">
-        <h1 className="log">login</h1>
+      <form className="form" onSubmit={submit}>
+        <h1>{isLogin ? "Login" : "Signup"}</h1>
+
+        {!isLogin && (
+          <input
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+        )}
 
         <input
-          className="formInput"
-          type="text"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          placeholder="Enter registered email"
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
         />
-        <br />
+
         <input
-          className="formInput"
           type="password"
-          onChange={function (e) {
-            setPassword(e.target.value);
-          }}
-          placeholder="Enter password"
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
         />
-        <br />
-        <input className="submitButton" type="submit" onClick={submit} />
+
+        <input type="submit" value={isLogin ? "Login" : "Signup"} />
+        <button className="loginButton" onClick={toggleForm}>
+          {isLogin ? "Switch to Signup" : "Switch to Login"}
+        </button>
       </form>
     </div>
   );
 };
-
 export default LoginRight;

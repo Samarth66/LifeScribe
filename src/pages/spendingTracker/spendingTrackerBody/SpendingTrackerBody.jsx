@@ -28,6 +28,7 @@ const SpendingTrackerBody = () => {
   const [showDialog, setShowDialog] = useState(true);
   const [prompt, setPrompt] = useState("");
   const [showChatBot, setShowChatBot] = useState(false);
+  const gptMessage = "Click on send to analyze your todays spending";
 
   const fetchSpendEntries = async (userId, date) => {
     try {
@@ -121,16 +122,17 @@ const SpendingTrackerBody = () => {
 
   const toggleChatBot = () => {
     let spendingPrompt =
-      "act as an financial advisor, below ais my todays spending data, in brief analyze it and give me advise if required, "; // Initialize the spendingPrompt variable
+      "act as an financial advisor, below is my todays spending data, in brief analyze it and give me advise if required, "; // Initialize the spendingPrompt variable
+    if (!data.transaction) {
+      for (const transaction of data.transactions) {
+        spendingPrompt +=
+          "ITEM: " +
+          `${transaction.name}" AMOUNT: $"${transaction.amount}" CATEGORY:" ${transaction.category}\n`;
+      }
 
-    for (const transaction of data.transactions) {
-      spendingPrompt +=
-        "ITEM: " +
-        `${transaction.name}" AMOUNT: $"${transaction.amount}" CATEGORY:" ${transaction.category}\n`;
+      console.log(spendingPrompt);
+      setPrompt(spendingPrompt);
     }
-
-    console.log(spendingPrompt);
-    setPrompt(spendingPrompt);
 
     // setPrompt(
     //    "please in brief analyze my spending, and feel free to give me financial advice if you "
@@ -178,7 +180,6 @@ const SpendingTrackerBody = () => {
           <SpendingTrackerChart data={data} />
         </div>
 
-        {/* Use the TransactionForm component */}
         {showAddTransactionForm && (
           <SpendingOverlayForm
             onClose={() => setShowAddTransactionForm(false)}
@@ -196,7 +197,7 @@ const SpendingTrackerBody = () => {
         >
           {<SmartToyOutlinedIcon />}
         </svg>
-        {showChatBot && <ChatBot prompt={prompt} />}
+        {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
       </div>
     </div>
   );
