@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { Board, List, Card } = require("./schema/goalTracker/boards");
-const { LockSharp } = require("@mui/icons-material");
 
 function goalTracker(io) {
   router.post("/add-card", async (req, res) => {
