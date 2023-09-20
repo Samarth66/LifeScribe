@@ -18,16 +18,27 @@ const SESSION_SECRET = process.env.DB_URI;
 const PORT = process.env.PORT;
 
 const io = initializeSocket(server);
+const MongoStore = require("connect-mongo");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+const corsOptions = {
+  origin: "http://yourfrontenddomain.com",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use(
   session({
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      collectionName: "sessions",
+      autoRemove: "interval",
+      autoRemoveInterval: 10, // In minutes. Default
+    }),
   })
 );
 app.use(passport.initialize());
@@ -72,7 +83,7 @@ passport.use(
 
         console.log("User found and password is correct", user.id);
 
-        // io.to(user.id).emit("joinRoom", user.id);
+        io.to(user.id).emit("joinRoom", user.id);
 
         return done(null, user);
       } catch (error) {
