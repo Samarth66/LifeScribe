@@ -15,7 +15,7 @@ const session = require("express-session");
 const initializeSocket = require("./routes/socket");
 require("dotenv").config();
 const SESSION_SECRET = process.env.DB_URI;
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 const io = initializeSocket(server);
 const MongoStore = require("connect-mongo");
