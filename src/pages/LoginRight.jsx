@@ -12,6 +12,7 @@ const LoginRight = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
 
   const userDetails = useSelector((state) => state.userDetails.userDetails);
   const dispatch = useDispatch();
@@ -20,6 +21,10 @@ const LoginRight = () => {
   useEffect(() => {}, [userDetails]);
 
   const toggleForm = () => {
+    setEmail("");
+    setPassword("");
+    setName("");
+    setMessage("");
     setIsLogin(!isLogin);
   };
 
@@ -44,6 +49,7 @@ const LoginRight = () => {
               id: resData.id,
               name: resData.name,
             };
+            socket.emit("joinRoom", resData.id);
             dispatch({ type: "SET_USER_DETAILS", payload: userData });
             history("/dashboard");
           } else if (resData.status === "notexist") {
@@ -54,8 +60,13 @@ const LoginRight = () => {
         } else {
           if (resData.status === "exist") {
             alert("User already exists");
-          } else if (resData.status === "notexist") {
-            setIsLogin(true);
+          } else if (resData.status === "password") {
+            alert(
+              "Please provide a password that consists of a minimum of six digits"
+            );
+          } else if (resData.status === "success") {
+            console.log("success");
+            setMessage("Signup successful. Welcome aboard!");
           }
         }
       })
@@ -72,6 +83,7 @@ const LoginRight = () => {
         {!isLogin && (
           <input
             type="text"
+            value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name"
           />
@@ -79,18 +91,23 @@ const LoginRight = () => {
 
         <input
           type="email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
         />
 
         <input
           type="password"
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
 
         <input type="submit" value={isLogin ? "Login" : "Signup"} />
-        <button className="loginButton" onClick={toggleForm}>
+        <p>
+          <b>{message}</b>
+        </p>
+        <button type="button" className="loginButton" onClick={toggleForm}>
           {isLogin ? "Switch to Signup" : "Switch to Login"}
         </button>
       </form>

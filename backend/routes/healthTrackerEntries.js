@@ -114,6 +114,7 @@ function healthTracker(io) {
       updateTotalNutrients(nutrientData, existingEntry.meals.total);
 
       await existingEntry.save();
+      console.log("sa", userId);
       io.to(userId).emit("meal-updated");
 
       res.status(200).json({ message: "Meal added successfully" });

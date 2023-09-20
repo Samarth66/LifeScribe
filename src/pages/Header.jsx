@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-
 import "../css/Header.css";
+import socket from "./socket";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Define a mapping of route paths to page titles
   const pageTitles = {
     "/journal": "Journal",
     "/goal": "Goal Tracker",
@@ -19,6 +18,7 @@ const Header = () => {
   const currentPageTitle = pageTitles[location.pathname] || "";
 
   const handleLogout = () => {
+    socket.disconnect();
     navigate("/");
   };
 
@@ -36,6 +36,17 @@ const Header = () => {
           <button className="loginButtonn" onClick={handleLogout}>
             Logout
           </button>
+        </nav>
+        <nav className="mobile-navigation dropdown">
+          <button className="loginButtonn">Menu</button>
+          <div className="dropdown-content">
+            <Link to="/journal">Journal</Link>
+            <Link to="/goal">Goal Tracker</Link>
+            <Link to="/health">Health Tracker</Link>
+            <Link to="/spending">Spending Tracker</Link>
+            <Link to="/dashboard">Dashboard</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
         </nav>
       </header>
     </div>

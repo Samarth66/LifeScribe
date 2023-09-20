@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const journalDetail = require("../journalSchema");
 const axios = require("axios");
-
+require("dotenv").config();
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 function journalRoutes(io) {
   // Existing journal route
   router.post("/journal", async (req, res) => {
@@ -76,7 +77,7 @@ function journalRoutes(io) {
         },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
           },
         }
       );

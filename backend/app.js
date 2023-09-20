@@ -13,6 +13,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 const session = require("express-session");
 const initializeSocket = require("./routes/socket");
+require("dotenv").config();
+const SESSION_SECRET = process.env.DB_URI;
+const PORT = process.env.PORT;
 
 const io = initializeSocket(server);
 
@@ -20,12 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const secret = crypto.randomBytes(32).toString("hex");
-
-console.log("Secret Key:", secret);
 app.use(
   session({
-    secret: secret,
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -82,19 +82,6 @@ passport.use(
   )
 );
 
-/*const io = new Server(server, {
-  cors: { origin: "http://localhost:3000" },
-});
-
-io.on("connection", (socket) => {
-  console.log("a user is connected");
-
-  socket.on("disconnect", () => {
-    console.log("a user disconnected");
-  });
-});
-*/
-
 const userRoutes = require("./routes/login");
 const signupRoutes = require("./routes/signup");
 const journalRoutes = require("./routes/journal");
@@ -110,7 +97,6 @@ app.use("/", journalEntriesRoutes);
 app.use("/", goalTracker(io));
 app.use("/", healthTracker(io));
 app.use("/", spendingTracker(io));
-const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

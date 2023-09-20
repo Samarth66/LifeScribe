@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
+const dbUri = process.env.DB_URI;
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/life", {
+  .connect(dbUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

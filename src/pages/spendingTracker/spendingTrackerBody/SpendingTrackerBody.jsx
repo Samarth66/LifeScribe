@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./SpendingTrackerBody.css";
 import SpendingTrackerChart from "../spendingTrackerChart/SpendingTrackerChart";
 import SpendingOverlayForm from "../SpendingOverlayForm/SpendingOverlayForm";
-import socket from "../../socket";
+
 import SpendingCard from "../spendingTrackerCard/SpendingCard";
 import ChatBot from "../../ChatBot/ChatBot";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
@@ -148,7 +148,6 @@ const SpendingTrackerBody = () => {
       </div>
       <div className="spending-tracker-body">
         <div className="spending-tracker-card">
-          {/* ... (other code remains the same) */}
           <h2>Transaction History</h2>
           <button
             className="add-transaction-button"
@@ -167,7 +166,7 @@ const SpendingTrackerBody = () => {
                     name={transaction.name}
                     category={transaction.category}
                     amount={transaction.amount}
-                    handleDeleteTransaction={handleDeleteTransaction} // Pass the function here
+                    handleDeleteTransaction={handleDeleteTransaction}
                   />
                 </div>
               ))

@@ -1,4 +1,11 @@
 /* Style for individual transaction cards */
+
+.cardHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .transaction-card {
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -6,4 +13,9 @@
   padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
+  margin-top: 10px;
+}
+
+.transaction-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

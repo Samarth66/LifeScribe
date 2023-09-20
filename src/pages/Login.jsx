@@ -8,8 +8,6 @@ import LoginLeft from "./LoginLeft";
 import LoginRight from "./LoginRight";
 
 const Login = () => {
-  const capt = "Capture Conquer Elevate";
-
   return (
     <div>
       <LoginHeader />
