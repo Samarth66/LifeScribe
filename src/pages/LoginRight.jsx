@@ -49,7 +49,11 @@ const LoginRight = () => {
               id: resData.id,
               name: resData.name,
             };
+            if (!socket.connected) {
+              socket.connect();
+            }
             socket.emit("joinRoom", resData.id);
+            console.log("sent", socket);
             dispatch({ type: "SET_USER_DETAILS", payload: userData });
             history("/dashboard");
           } else if (resData.status === "notexist") {

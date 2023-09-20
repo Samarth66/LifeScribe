@@ -134,6 +134,7 @@ function goalTracker(io) {
       await Card.findByIdAndDelete(id);
 
       io.to(userId).emit("cardDeleted");
+
       res.status(200).json({ message: "Card deleted successfully" });
     } catch (e) {
       console.log("Card deletion failed", e);

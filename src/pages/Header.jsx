@@ -19,6 +19,7 @@ const Header = () => {
 
   const handleLogout = () => {
     socket.disconnect();
+    console.log("received", socket);
     navigate("/");
   };
 

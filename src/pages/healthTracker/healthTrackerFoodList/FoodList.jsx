@@ -10,11 +10,15 @@ const FoodList = (props) => {
   return (
     <div className="food-list">
       <div className="food-card">
-        <h3>{props.foodName}</h3>
-        <p>
-          <strong>Energy:</strong> {props.foodData}
-        </p>
-        <DeleteIcon onClick={handleDelete} />
+        <div>
+          <h3>
+            <strong>{props.foodName}</strong>{" "}
+          </h3>
+          <p>Energy:{props.foodData}</p>
+        </div>
+        <>
+          <DeleteIcon onClick={handleDelete} />
+        </>
       </div>
     </div>
   );

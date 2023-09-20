@@ -72,7 +72,7 @@ passport.use(
 
         console.log("User found and password is correct", user.id);
 
-        io.to(user.id).emit("joinRoom", user.id);
+        // io.to(user.id).emit("joinRoom", user.id);
 
         return done(null, user);
       } catch (error) {

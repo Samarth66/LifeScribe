@@ -37,42 +37,30 @@ const Journal = () => {
 
   const toggleChatBot = () => {
     const wordlist = rake(description);
+
     const m = Math.min(3, wordlist.length);
     setKeywords(wordlist.slice(0, m));
 
     const keywordString = keywords.join(", ");
-    console.log(wordlist, wordlist.slice(0, m), keywordString);
+
     setPrompt("In brief Tell me 5 books related to " + keywordString);
 
     setShowChatBot(!showChatBot);
   };
   useEffect(() => {
-    console.log("Effect triggered due to selectedJournalDetails change");
-
     if (selectedJournalDetails.title) {
-      console.log("Setting title and description");
       setTitle(selectedJournalDetails.title);
       setDescription(selectedJournalDetails.description);
       setUpdateButton(1);
     } else {
-      console.log("Clearing title and description");
       setTitle("");
       setDescription("");
-      console.log(selectedJournalDetails, title, description);
+
       //setUpdateButton(0);
     }
   }, [selectedJournalDetails]);
 
-  useEffect(() => {
-    if (updateButton == 0) {
-      console.log("new entry");
-    } else {
-      console.log("update entry");
-    }
-  }, [updateButton]);
-
   const id = userDetails.id;
-  console.log("id is", selectedJournalDetails);
 
   // Inside Journal.jsx
   useEffect(() => {
@@ -145,7 +133,6 @@ const Journal = () => {
           description: newEntry.data[0].description,
           date: newEntry.data[0].date,
         };
-        console.log("this will be added to redux", jDetails);
 
         dispatch({ type: "GET_JOURNAL_DETAILS", payload: jDetails });
 

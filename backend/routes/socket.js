@@ -12,19 +12,22 @@ function initializeSocket(server) {
     console.log("a user is connected");
 
     socket.on("joinRoom", (userId) => {
+      console.log("2nd");
       users.set(socket.id, userId);
       socket.join(userId);
-      console.log(`User ${userId} joined the room`);
+      console.log(`User joined the room`);
       io.to(userId).emit("messageFromServer", "hello");
     });
 
     socket.on("disconnect", () => {
       const userId = users.get(socket.id);
+      console.log(users);
 
       if (userId) {
-        console.log(`User ${userId} disconnected`);
+        console.log(`User from room disconnected`);
         // Remove the mapping when a user disconnects
         users.delete(socket.id);
+        console.log("After removal", users);
 
         // Perform cleanup or handle the disconnection here...
       }

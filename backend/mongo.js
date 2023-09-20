@@ -8,10 +8,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("database connected");
+    console.log("MongoDB Atlas connected");
   })
   .catch((err) => {
-    console.error("connection failed:", err.message);
+    console.error("MongoDB Atlas connection failed:", err.message);
   });
 
 const loginSchema = new mongoose.Schema({

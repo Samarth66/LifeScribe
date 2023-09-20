@@ -20,8 +20,6 @@ const Sidebar = ({ onClearData }) => {
         's Journal
       </p>
 
-      <input type="search" className="titleSearch" />
-      <br />
       <button className="newEntry" onClick={handleNewEntryClick}>
         <b>New Entry</b>
       </button>

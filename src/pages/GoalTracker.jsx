@@ -38,8 +38,10 @@ const GoalTracker = () => {
     "Kindly select 'send' to receive a personalized schedule to complete tasks";
 
   const toggleChatBot = () => {
+    fetchData();
     const formattedListData = Object.entries(listData)
       .map(([listName, cardNames]) => {
+        console.log(listData);
         return `${listName}: ${cardNames}`;
       })
       .join("\n");
