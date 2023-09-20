@@ -78,8 +78,7 @@ function GoalTrackerSidebar() {
             userDetails.name.slice(1).toLowerCase()}
           's Goal Tracker
         </p>
-        <input type="search" className="titleSearch" />
-        <br />
+
         <button className="newEntry" onClick={show}>
           <b>Add a board</b>
         </button>

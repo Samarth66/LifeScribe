@@ -46,7 +46,7 @@
 }
 
 .newEntry:hover {
-  background-color: aliceblue;
+  background-color: rgb(255, 255, 255);
 }
 
 .entry {

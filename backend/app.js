@@ -23,7 +23,7 @@ const MongoStore = require("connect-mongo");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
-  origin: "http://yourfrontenddomain.com",
+  origin: process.env.SOCKET_IO_CORS_ORIGIN,
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));

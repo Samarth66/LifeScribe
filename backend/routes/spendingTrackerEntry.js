@@ -3,7 +3,6 @@
 const express = require("express");
 const router = express.Router();
 const UserTransaction = require("./spendingTracker");
-const { json } = require("react-router-dom");
 
 function spendingTrackerEntries(io) {
   router.get("/fetch-spendings", async (req, res) => {
