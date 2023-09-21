@@ -1,9 +1,10 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import "./DashboardBody.css";
+import "chartjs-adapter-moment";
+import moment from "moment";
 
 const HealthLineChart = ({ healthData }) => {
-  // Extract dates and values from healthData
   const dates = Object.keys(healthData);
   const proteinData = dates.map((date) => healthData[date].protein);
   const energyData = dates.map((date) => healthData[date].energy);
@@ -57,69 +58,68 @@ const HealthLineChart = ({ healthData }) => {
     maintainAspectRatio: false,
     responsive: true,
     scales: {
-      x: [
-        {
-          type: "time",
-          time: {
-            unit: "day",
-          },
-          title: {
-            display: true,
-            text: "Date",
-            font: {
-              size: 16, // Increase the font size
-            },
-          },
-          grid: {
-            color: "rgba(0, 0, 0, 0.1)", // Customize gridline color
-          },
-          ticks: {
-            font: {
-              size: 14, // Increase the tick font size
-            },
+      x: {
+        // Change here
+        type: "time",
+        time: {
+          unit: "day",
+        },
+        reverse: false,
+        title: {
+          display: true,
+          text: "Date",
+          font: {
+            size: 16,
           },
         },
-      ],
-      y: [
-        {
-          ticks: {
-            beginAtZero: true,
-            font: {
-              size: 14, // Increase the tick font size
-            },
-          },
-          title: {
-            display: true,
-            text: "Value",
-            font: {
-              size: 16, // Increase the font size
-            },
-          },
-          grid: {
-            color: "rgba(0, 0, 0, 0.1)", // Customize gridline color
+        grid: {
+          color: "rgba(0, 0, 0, 0.1)",
+        },
+        ticks: {
+          font: {
+            size: 14,
           },
         },
-      ],
+      },
+      y: {
+        // Change here
+        ticks: {
+          beginAtZero: true,
+          font: {
+            size: 14,
+          },
+        },
+        title: {
+          display: true,
+          text: "Value",
+          font: {
+            size: 16,
+          },
+        },
+        grid: {
+          color: "rgba(0, 0, 0, 0.1)",
+        },
+      },
     },
     plugins: {
       legend: {
         display: true,
-        position: "top", // Display legends at the top
+        position: "top",
         labels: {
           font: {
-            size: 14, // Increase the legend label font size
+            size: 14,
           },
-          align: "start", // Align legends to the start (left)
+          align: "start",
         },
       },
       tooltip: {
         enabled: true,
         backgroundColor: "rgba(0, 0, 0, 0.8)",
         titleFont: {
-          size: 16, // Increase the tooltip title font size
+          size: 16,
         },
         bodyFont: {
-          size: 14, // Increase the tooltip body font size
+          size: 14,
         },
       },
     },
@@ -127,8 +127,6 @@ const HealthLineChart = ({ healthData }) => {
 
   return (
     <div style={{ height: "100%" }} className="chart-data2">
-      {" "}
-      {/* Set the height of the chart container */}
       <Line data={chartData} options={chartOptions} />
     </div>
   );

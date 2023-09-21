@@ -38,7 +38,6 @@ const DashboardBody = () => {
         return entryDate >= lastWeek;
       });
 
-      // Find the latest journal entry
       const latestEntry = allJournalData.reduce((latest, entry) => {
         const entryDate = new Date(entry.date);
         if (!latest || entryDate > latest.date) {
@@ -94,10 +93,8 @@ const DashboardBody = () => {
         last7Days.push(date.toISOString().split("T")[0]);
       }
 
-      // Create a map to store the health data for the last 7 days
       const healthDataForLast7Days = {};
 
-      // Iterate over the last 7 days and check if data is available
       last7Days.forEach((date) => {
         const dataForDate = healthDataFromServer.find(
           (entry) => entry.date === date
@@ -106,7 +103,6 @@ const DashboardBody = () => {
         if (dataForDate) {
           healthDataForLast7Days[date] = dataForDate.meals.total;
         } else {
-          // If data is not present for a date, set totals to 0
           healthDataForLast7Days[date] = {
             protein: 0,
             energy: 0,
@@ -117,7 +113,6 @@ const DashboardBody = () => {
         }
       });
 
-      // Set the formatted health data in the state
       setHealthData(healthDataForLast7Days);
     } catch (error) {
       console.log("Failed to fetch healthEntries", error);
@@ -192,29 +187,23 @@ const DashboardBody = () => {
   const spendingChartOptions = {
     maintainAspectRatio: false,
     scales: {
-      x: [
-        {
-          type: "time",
-          time: {
-            unit: "day",
-          },
-          title: {
-            display: true,
-            text: "Date",
-          },
+      x: {
+        type: "time",
+        time: {
+          unit: "day",
         },
-      ],
-      y: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-          title: {
-            display: true,
-            text: "Total",
-          },
+        title: {
+          display: true,
+          text: "Date",
         },
-      ],
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Total",
+        },
+      },
     },
   };
 

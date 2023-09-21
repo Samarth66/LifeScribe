@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const journalDetail = require("../journalSchema");
 
-
 router.get("/journal-entries", async (req, res) => {
   const { userId } = req.query;
   console.log("req body", req.query);
