@@ -50,7 +50,7 @@ function HealthCharts({ totalValues, total }) {
     const options = {
       scales: {
         x: {
-          reverse: false,
+          reverse: true,
         },
         y: {
           beginAtZero: true,
