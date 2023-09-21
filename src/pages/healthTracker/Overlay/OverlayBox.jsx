@@ -84,8 +84,6 @@ const OverlayBox = ({
 
       const response = await axios.post(`${apiBaseUrl}/add-meal`, mealData);
 
-      console.log("Meal added successfully:", response.data);
-
       setSearchResults([]);
       setFood("");
     } catch (error) {

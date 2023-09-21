@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import socket from "./pages/socket";
 import "./css/App.css";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Login from "./pages/Login/loginBody/Login";
+import Signup from "./pages/Login/Signup";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/DashBoardBody/DashBoardBody";
-import Journal from "./pages/Journal";
-import GoalTracker from "./pages/GoalTracker";
+import Journal from "./pages/journal/journalBody/Journal";
+import GoalTracker from "./pages/goalTracker/goalTracker/GoalTracker";
 import HealthTracker from "./pages/healthTracker/HealthTracker/HealthTracker";
 import SpendingTracker from "./pages/spendingTracker/spendingTracker/SpendingTracker";
 

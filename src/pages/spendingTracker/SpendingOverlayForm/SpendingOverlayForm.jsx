@@ -50,7 +50,6 @@ const SpendingOverlayForm = ({ onClose, onTransactionAdded }) => {
       });
 
       if (response.status === 201) {
-        console.log("Successfully created the transaction");
         onTransactionAdded();
         onClose();
       } else {

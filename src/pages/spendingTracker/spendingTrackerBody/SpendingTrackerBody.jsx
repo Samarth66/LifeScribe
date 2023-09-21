@@ -40,19 +40,12 @@ const SpendingTrackerBody = () => {
         },
       });
 
-      console.log("status fetch", response.status, response.data);
-
       if (response.status === 200) {
         const spendingData = response.data;
-        console.log("data fetched", spendingData);
-
         if (!spendingData) {
           await createSpendingEntry(userDetails, SpendingDate);
-
-          console.log("created new spending entry");
         } else {
           setData(spendingData);
-          console.log(data);
         }
       } else {
         console.log("Error fetching spending data");
@@ -74,7 +67,6 @@ const SpendingTrackerBody = () => {
       );
       console.log(response.status);
       if (response.status === 201) {
-        console.log("Successfully created the data");
       } else {
         console.log("Failed to create spending entry");
       }
@@ -105,7 +97,6 @@ const SpendingTrackerBody = () => {
       });
 
       if (response.status === 200) {
-        console.log("Successfully deleted transaction");
         fetchSpendEntries(userDetails, SpendingDate);
       } else {
         console.log("Failed to delete transaction");
@@ -124,8 +115,6 @@ const SpendingTrackerBody = () => {
           "ITEM: " +
           `${transaction.name}" AMOUNT: $"${transaction.amount}" CATEGORY:" ${transaction.category}\n`;
       }
-
-      console.log(spendingPrompt);
       setPrompt(spendingPrompt);
     }
 

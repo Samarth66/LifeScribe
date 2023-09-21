@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import "../css/Login.css";
-import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
+import "./Login.css";
 import "animate.css";
-import LoginHeader from "./LoginHeader";
-import LoginLeft from "./LoginLeft";
-import LoginRight from "./LoginRight";
+import LoginHeader from "../header/LoginHeader";
+import LoginLeft from "../loginLeft/LoginLeft";
+import LoginRight from "../loginRight/LoginRight";
 
 const Login = () => {
   return (

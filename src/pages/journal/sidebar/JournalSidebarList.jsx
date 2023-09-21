@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/SidebarTitles.css";
+import "./SidebarTitles.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -43,9 +43,8 @@ const SidebarTitles = (props) => {
       // Dispatch an action to update the state or re-fetch data
       dispatch({ type: "DELETE_JOURNAL_ENTRY", payload: props.id });
       dispatch({ type: "RESET_SELECTED_JOURNAL_DETAILS" });
-      console.log("after dispatch", selectedJournalDetails);
     } catch (error) {
-      console.log("cannot delete journal entry", error);
+   
     }
   };
 
@@ -57,7 +56,7 @@ const SidebarTitles = (props) => {
         },
       });
 
-      console.log("fetched", resp.data);
+    
 
       const jDetails = {
         id: resp.data[0]._id,

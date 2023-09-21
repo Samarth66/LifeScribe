@@ -16,8 +16,6 @@ const MealComponent = ({ title, meals }) => {
     (state) => state.selectedIdDetails.selectedIdDetails.id
   );
 
-  console.log("mealdata from above", meals);
-
   const [mealData, setMealData] = useState([]);
   const [reloadKey, setReloadKey] = useState(0);
 
@@ -27,7 +25,7 @@ const MealComponent = ({ title, meals }) => {
         params: { healthId },
       });
       const data = response.data;
-      console.log("got data?,", data);
+
       setMealData(data);
     } catch (e) {
       console.log("fetching failed ", e);
@@ -53,7 +51,6 @@ const MealComponent = ({ title, meals }) => {
       meals.forEach((foodItem) => {
         totalEnergy += foodItem.energy || 0;
       });
-      console.log("totalenrgy", totalEnergy);
     }
     return totalEnergy;
   };
@@ -67,7 +64,6 @@ const MealComponent = ({ title, meals }) => {
       await axios.delete(`${apiBaseUrl}/delete-meal`, {
         data: { userId, healthId, mealType: title.toLowerCase(), foodId },
       });
-      console.log("del");
     } catch (error) {
       console.error("Failed to delete food item:", error);
     }
@@ -94,8 +90,6 @@ const MealComponent = ({ title, meals }) => {
         }}
         mealTitle={title}
         onSearch={(food) => {
-          console.log(apiKey, apiBaseUrl, "Dsadsa");
-
           const apiUrl = `https://api.nal.usda.gov/fdc/v1/search?api_key=${apiKey}&query=${food}`;
 
           return fetch(apiUrl)
@@ -108,7 +102,7 @@ const MealComponent = ({ title, meals }) => {
             .then((data) => {
               const searchResults = data.foods || [];
               const topResults = searchResults.slice(0, 10);
-              console.log(topResults);
+
               return topResults;
             })
             .catch((error) => {
@@ -117,11 +111,9 @@ const MealComponent = ({ title, meals }) => {
             });
         }}
       />
-      {console.log("test", mealData[title])}
 
       {meals &&
         meals.map((foodItem) => {
-          console.log("foodItem:", foodItem);
           return (
             <FoodList
               key={foodItem.foodId}

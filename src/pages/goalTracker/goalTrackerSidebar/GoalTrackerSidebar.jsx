@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../css/GoalTrackerSidebar.css";
-import "../css/Sidebar.css";
+
+import "../../../css/Sidebar.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import BoardItems from "./BoardItems";
-import Header from "./Header";
+import BoardItems from "../sidebarBoardList/BoardItems";
+import Header from "../../header/Header";
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function GoalTrackerSidebar() {
@@ -23,26 +23,20 @@ function GoalTrackerSidebar() {
       const entries = await axios.get(`${apiBaseUrl}fetch-sidebar`, {
         params: { userId: id }, // Pass the user ID as a query parameter
       });
-      console.log("yeye fetched board", entries.data);
       const bentry = entries.data;
       dispatch({
         type: "FETCH_BOAD_ENTRIES",
         payload: bentry,
       });
-      console.log("have i got it in reduc?", boardEntries);
     } catch (e) {
       console.log("cannot fetch board entries", e);
     }
   };
   useEffect(() => {
-    console.log(boardEntries);
-
     dispatch(fetchBoardEntries(id));
   }, [dispatch, id]);
 
-  useEffect(() => {
-    console.log("Updated board entries:", boardEntries);
-  }, [boardEntries]);
+  useEffect(() => {}, [boardEntries]);
 
   function show() {
     setShowInput(true);
@@ -63,9 +57,6 @@ function GoalTrackerSidebar() {
     setShowInput(false);
   }
 
-  function handleClick(e) {
-    console.log(e);
-  }
   return (
     <div>
       <Header />

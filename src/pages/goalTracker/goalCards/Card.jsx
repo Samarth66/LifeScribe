@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/Card.css";
+import "./Card.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,9 +15,7 @@ function Card(props) {
           userId: userId,
         },
       })
-      .then((response) => {
-        console.log("card deleted succesfully");
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log("card deletetion failed");
       });

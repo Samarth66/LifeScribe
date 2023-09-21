@@ -14,7 +14,6 @@ function HealthTrackerSidebar() {
   const dispatch = useDispatch();
 
   const handleDateClick = (date) => {
-    // Check if the clicked date is in the future
     if (date > new Date()) {
       return;
     }
@@ -25,7 +24,6 @@ function HealthTrackerSidebar() {
     dispatch({ type: "SELECTED_DATE_DETAIL", payload: isoDateString });
   };
 
-  // Calculate the maximum selectable date (today)
   const maxSelectableDate = new Date();
   maxSelectableDate.setHours(0, 0, 0, 0);
 
@@ -39,12 +37,11 @@ function HealthTrackerSidebar() {
 
       <br />
 
-      {/* Render the calendar */}
       <div className="calendar">
         <Calendar
           onClickDay={handleDateClick}
           value={selectedDate}
-          maxDate={maxSelectableDate} // Limit selectable dates to today or earlier
+          maxDate={maxSelectableDate}
         />
       </div>
 

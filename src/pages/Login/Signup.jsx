@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../css/Login.css";
+import "./loginBody/Login.css";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -22,9 +22,9 @@ const Signup = () => {
         })
         .then((res) => {
           const resData = res.data;
-          if (resData.status == "exist") {
+          if (resData.status === "exist") {
             alert("user already exists");
-          } else if (resData.status == "notexist") {
+          } else if (resData.status === "notexist") {
             history("/journal", {
               state: { name: resData.name, id: resData.id },
             });

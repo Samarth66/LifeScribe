@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "../css/Sidebar.css";
-import JournalEntry from "./JournalEntry";
-import SidebarTitles from "./SidebarTitles";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import "../../../css/Sidebar.css";
+
+import JournalSidebarList from "./JournalSidebarList";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ onClearData }) => {
   const journalEntries = useSelector((state) => state.journal.journalEntries);
@@ -10,7 +10,7 @@ const Sidebar = ({ onClearData }) => {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
 
   const handleNewEntryClick = () => {
-    onClearData(); // Correctly calls the onClearData prop from the parent component
+    onClearData();
   };
   return (
     <div className="sidebar">
@@ -25,7 +25,7 @@ const Sidebar = ({ onClearData }) => {
       </button>
       <div className="entry">
         {journalEntries.map((entry) => (
-          <SidebarTitles
+          <JournalSidebarList
             title={entry.title}
             date={entry.date}
             key={entry._id}

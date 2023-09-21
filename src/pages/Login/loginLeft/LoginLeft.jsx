@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../css/Login.css";
+import "../loginBody/Login.css";
 
 const LoginLeft = () => {
   const words = ["Capture", "Conquer", "Elevate"];

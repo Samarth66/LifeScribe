@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Header from "../../header/Header";
+import Sidebar from "../sidebar/Sidebar";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import "../css/Journal.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import ChatBot from "./ChatBot/ChatBot";
-import ChatBotIcon from "../robot-solid.svg";
+import "./Journal.css";
+import ChatBot from "../../ChatBot/ChatBot";
+
 import rake from "rake-js";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -19,17 +16,15 @@ const Journal = () => {
   const [title, setTitle] = useState("");
   const [updateButton, setUpdateButton] = useState(0);
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const location = useLocation();
+
   const dispatch = useDispatch();
-  const journalEntries = useSelector((state) => state.journal.journalEntries);
+
   const userDetails = useSelector((state) => state.userDetails.userDetails);
   const selectedJournalDetails = useSelector(
     (state) => state.journalDetails.selectedJournalDetails
   );
   const [showChatBot, setShowChatBot] = useState(false);
   const [keywords, setKeywords] = useState([]);
-  const [showDialog, setShowDialog] = useState(true);
   const [prompt, setPrompt] = useState("");
   const gptMessage =
     "Please click on 'Send' to see books and articles related to your journal entry.";
@@ -54,14 +49,11 @@ const Journal = () => {
     } else {
       setTitle("");
       setDescription("");
-
-      //setUpdateButton(0);
     }
   }, [selectedJournalDetails]);
 
   const id = userDetails.id;
 
-  // Inside Journal.jsx
   useEffect(() => {
     const fetchEntries = async () => {
       try {
@@ -76,7 +68,6 @@ const Journal = () => {
         dispatch({ type: "FETCH_JOURNAL_ENTRIES", payload: response.data });
       } catch (error) {
         console.log(error);
-        // Handle error
       }
     };
 
@@ -110,7 +101,7 @@ const Journal = () => {
       e.preventDefault();
       const date = new Date();
       const current = formatDate(date);
-      console.log("date", current);
+
       try {
         const newEntry = await axios.post(`${apiBaseUrl}/journal`, {
           id,

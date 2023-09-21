@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/BoardItems.css";
+import "./BoardItems.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -9,8 +9,6 @@ import MenuItem from "@mui/material/MenuItem";
 
 function BoardItems(props) {
   const dispatch = useDispatch();
-  const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
-  const boardEntries = useSelector((state) => state.board.boardEntries);
   const userId = useSelector((state) => state.userDetails.userDetails).id;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,17 +24,15 @@ function BoardItems(props) {
   };
 
   const handleDeleteClick = async () => {
-    // Add your delete logic here. For example:
     try {
       await axios.delete(`${apiBaseUrl}/delete-board-entry`, {
         params: { boardId: props.id, userId: userId },
       });
 
-      // Dispatch an action to update the state or re-fetch data
       dispatch({ type: "DELETE_BOARD_ENTRY", payload: props.id });
       dispatch({ type: "RESET_SELECTED_BOARD_DETAILS" });
     } catch (error) {
-      console.log("cannot delete board entry", error);
+      console.log("failed to delete board entry", error);
     }
   };
 

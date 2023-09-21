@@ -29,20 +29,12 @@ const HealthTrackerBody = () => {
   const gptMessage =
     "Click 'Send' to discover dietary modifications and receive recommendations.";
 
-  // useEffect(() => {
-  //console.log("is it working?");
-  //dispatch({ type: "SELECTED_DATE_DETAIL", payload: "" });
-  // console.log("after", healthDate);
-  //}, [healthDate]);
   useEffect(() => {
     if (healthDate) {
-      //console.log("automatic", userDetails, healthDate);
-      console.log("in healthbody");
       fetchEntryForDate(userDetails, healthDate);
     }
     socket.on("meal-updated", () => {
       fetchEntryForDate(userDetails, healthDate);
-      console.log("received from socket");
     });
 
     return () => {
@@ -52,7 +44,6 @@ const HealthTrackerBody = () => {
 
   const fetchEntryForDate = async (userId, date) => {
     try {
-      console.log(userDetails, healthDate);
       const response = await axios.post(`${apiBaseUrl}/fetch-lists`, {
         userDetails,
         healthDate,
@@ -60,7 +51,6 @@ const HealthTrackerBody = () => {
 
       if (response.status === 200) {
         const entryData = response.data;
-        console.log("fetched Data", entryData);
 
         if (!entryData) {
           await createEntryForDate(userDetails, healthDate);
@@ -68,14 +58,6 @@ const HealthTrackerBody = () => {
           setEntry(entryData);
           setChartData(entryData.meals.total);
           dispatch({ type: "SELECTED_HEALTH_ID", payload: response.data._id });
-          console.log(
-            "REsponse",
-            entryData,
-            "health",
-            healthId,
-            "Total",
-            chartData
-          );
         }
       } else {
         console.error("Error fetching entry for date:", response.status);
@@ -97,7 +79,6 @@ const HealthTrackerBody = () => {
 
       if (response.status == 200) {
         const entryData = response.data;
-        console.log("created entry data", entryData);
       }
     } catch (error) {
       console.error("Error creating entry:", error);
@@ -173,7 +154,6 @@ const HealthTrackerBody = () => {
         <p>Selected Date: {formattedDate}</p>
       </div>
       <div className="healthTrackerBodyy">
-        {console.log("stopppppp", healthDate)}
         <div className="healthMeals">
           {entry && (
             <div className="healthMeal">

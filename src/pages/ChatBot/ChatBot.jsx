@@ -21,10 +21,8 @@ const ChatBot = (props) => {
   }, []);
 
   const sendToChatBot = async () => {
-    console.log("bot", props.prompt);
-
     const prompt = "" + props.prompt;
-    console.log(prompt);
+
     try {
       const response = await axios.post(`${apiBaseUrl}/ask`, {
         prompt: prompt,

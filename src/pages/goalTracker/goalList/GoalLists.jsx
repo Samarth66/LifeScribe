@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import "../css/GoalList.css";
+import "./GoalList.css";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import axios from "axios";
-import Card from "./Card";
-import socket from "./socket";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"; // Import the components
+import Card from "../goalCards/Card";
+import socket from "../../socket";
+import { Droppable, Draggable } from "react-beautiful-dnd"; // Import the components
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function GoalLists(props) {
@@ -20,7 +20,6 @@ function GoalLists(props) {
   useEffect(() => {
     fetchCards();
     socket.on("cardDeleted", () => {
-      console.log("received deleteion confirmation");
       fetchCards();
     });
 
@@ -29,9 +28,7 @@ function GoalLists(props) {
     };
   }, []);
 
-  const handleCardDeleted = () => {
-    console.log("card gone");
-  };
+  const handleCardDeleted = () => {};
 
   function handleCardTitleChange(event) {
     setShowInput(true);
@@ -47,7 +44,7 @@ function GoalLists(props) {
       });
       fetchCards();
     } catch {
-      console.log("not able");
+      console.log("card addition failed");
     }
   }
 

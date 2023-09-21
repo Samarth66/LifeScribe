@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../css/Login.css";
+import "../loginBody/Login.css";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import socket from "./socket";
+import socket from "../../socket";
 import { useDispatch, useSelector } from "react-redux";
-const initializeSocket = require("./socket");
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const LoginRight = () => {
@@ -30,7 +29,7 @@ const LoginRight = () => {
   };
 
   const submit = async (e) => {
-    console.log(apiBaseUrl);
+   
     e.preventDefault();
 
     let url = isLogin ? `${apiBaseUrl}/` : `${apiBaseUrl}/signup`;
@@ -53,7 +52,7 @@ const LoginRight = () => {
               socket.connect();
             }
             socket.emit("joinRoom", resData.id);
-            console.log("sent", socket);
+           
             dispatch({ type: "SET_USER_DETAILS", payload: userData });
             history("/dashboard");
           } else if (resData.status === "notexist") {
@@ -69,7 +68,7 @@ const LoginRight = () => {
               "Please provide a password that consists of a minimum of six digits"
             );
           } else if (resData.status === "success") {
-            console.log("success");
+           
             setMessage("Signup successful. Welcome aboard!");
           }
         }

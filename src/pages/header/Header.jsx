@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import "../css/Header.css";
-import socket from "./socket";
+import "./Header.css";
+import socket from "../socket";
 
 const Header = () => {
   const location = useLocation();
@@ -19,7 +19,6 @@ const Header = () => {
 
   const handleLogout = () => {
     socket.disconnect();
-    console.log("received", socket);
     navigate("/");
   };
 

@@ -85,7 +85,7 @@ function HealthCharts({ totalValues, total }) {
     <div className="chart-container">
       <h2>Total caloeies consumed today:{total}</h2>
       <h3>Macros</h3>
-      {totalValues ? console.log("dsa") : <p>No total values available.</p>}
+      {totalValues ? {} : <p>No total values available.</p>}
       <canvas ref={chartRef}></canvas>
     </div>
   );

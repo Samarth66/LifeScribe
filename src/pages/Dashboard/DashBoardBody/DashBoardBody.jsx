@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Header from "../../Header";
+import Header from "../../header/Header";
 import "./DashboardBody.css";
 import { Line } from "react-chartjs-2";
 import HealthLineChart from "./HealthLineChart";
@@ -65,11 +65,9 @@ const DashboardBody = () => {
       setTodo(todoCount);
       setInProgress(inProgressCount);
       setCompleted(completedCount);
-      console.log(response.data, "dsadas");
       setTodo(todoCount);
       setInProgress(inProgressCount);
       setCompleted(completedCount);
-      console.log("tttt", todo, inProgress, completedCount);
     } catch (error) {
       console.error("Failed to fetch card counts:", error);
     }
@@ -85,7 +83,6 @@ const DashboardBody = () => {
       );
 
       const healthDataFromServer = response.data;
-      console.log("Server,", healthDataFromServer);
 
       const last7Days = [];
       const today = new Date();
@@ -119,7 +116,7 @@ const DashboardBody = () => {
           };
         }
       });
-      console.log("sdada", healthDataForLast7Days);
+
       // Set the formatted health data in the state
       setHealthData(healthDataForLast7Days);
     } catch (error) {

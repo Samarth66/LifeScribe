@@ -30,9 +30,7 @@ function SpendingTrackerSidebar() {
     dispatch({ type: "SELECTED_SPENDING_DATE_DETAIL", payload: formattedDate });
   };
 
-  useEffect(() => {
-    console.log("s", SpendingDate);
-  }, [SpendingDate]);
+  useEffect(() => {}, [SpendingDate]);
 
   return (
     <div className="sidebar-spending">

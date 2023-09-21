@@ -1,26 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import GoalTrackerSidebar from "./GoalTrackerSidebar";
-import "../css/GoalTracker.css";
+import GoalTrackerSidebar from "../goalTrackerSidebar/GoalTrackerSidebar";
+import "./GoalTracker.css";
 import { useDispatch, useSelector } from "react-redux";
-import GoalLists from "./GoalLists";
+import GoalLists from "../goalList/GoalLists";
 import axios from "axios";
-import socket from "./socket";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
-import ChatBot from "./ChatBot/ChatBot";
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+import ChatBot from "../../ChatBot/ChatBot";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 const GoalTracker = () => {
-  const userDetails = useSelector((state) => state.userDetails.userDetails);
-  const dispatch = useDispatch();
-  const boardEntries = useSelector((state) => state.board.boardEntries);
   const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
 
   const [fetchedList, setFetchedList] = useState([]);
   const [forceUpdate, setForceUpdate] = useState(false);
 
-  const [cardEntries, setCardEntries] = useState([]);
   const [showChatBot, setShowChatBot] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [listData, setListData] = useState({});
@@ -42,7 +37,6 @@ const GoalTracker = () => {
     fetchData();
     const formattedListData = Object.entries(listData)
       .map(([listName, cardNames]) => {
-        console.log(listData);
         return `${listName}: ${cardNames}`;
       })
       .join("\n");
@@ -50,7 +44,7 @@ const GoalTracker = () => {
     const s =
       "Assist me in structuring my day for optimal task completion." +
       formattedListData;
-    console.log(formattedListData);
+
     // Initialize the spendingPrompt variable
     setPrompt(s);
 
@@ -89,24 +83,18 @@ const GoalTracker = () => {
       );
 
       // Now listData in the component's state contains the desired format
-      console.log("Formatted list data:", listData);
     } catch {
       console.log("Not able to retrieve anything");
     }
   };
 
   useEffect(() => {
-    console.log("this is the selected board", selectedBoardDetails);
     fetchData();
-    console.log(listData, "ddd");
   }, [selectedBoardDetails]);
 
   const handleDragEnd = async (result) => {
-    console.log("Drag result:", result);
-
     const cardId = result.draggableId;
     const newParentListId = result.destination.droppableId;
-    console.log(cardId, newParentListId);
 
     try {
       await axios.post(`${apiBaseUrl}/update-cards`, {
@@ -115,7 +103,7 @@ const GoalTracker = () => {
       });
       setForceUpdate((prevState) => !prevState);
     } catch {
-      console.log("update card details");
+      console.log("update card details failed");
     }
 
     if (!result.destination) {
