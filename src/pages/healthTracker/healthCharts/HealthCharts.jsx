@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./HealthCharts.css"; // Import your CSS file
+import "./HealthCharts.css";
 import Chart from "chart.js/auto";
 
 function HealthCharts({ totalValues, total }) {
@@ -16,43 +16,32 @@ function HealthCharts({ totalValues, total }) {
     }
 
     const ctx = chartRef.current.getContext("2d");
-
     const data = {
-      labels: [""],
+      labels: ["Protein", "Energy", "Carbohydrates", "Fats", "Sugar"],
       datasets: [
         {
-          label: "Protein",
-          data: [totalValues.protein],
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
-          borderColor: "rgba(255, 99, 132, 1)",
-          borderWidth: 1,
-        },
-        {
-          label: "Energy",
-          data: [totalValues.energy],
-          backgroundColor: "rgba(54, 162, 235, 0.5)",
-          borderColor: "rgba(54, 162, 235, 1)",
-          borderWidth: 1,
-        },
-        {
-          label: "Carbohydrates",
-          data: [totalValues.carbohydrates],
-          backgroundColor: "rgba(255, 206, 86, 0.5)",
-          borderColor: "rgba(255, 206, 86, 1)",
-          borderWidth: 1,
-        },
-        {
-          label: "Fats",
-          data: [totalValues.fats],
-          backgroundColor: "rgba(75, 192, 192, 0.5)",
-          borderColor: "rgba(75, 192, 192, 1)",
-          borderWidth: 1,
-        },
-        {
-          label: "Sugar",
-          data: [totalValues.sugar],
-          backgroundColor: "rgba(153, 102, 255, 0.5)",
-          borderColor: "rgba(153, 102, 255, 1)",
+          label: "Macros",
+          data: [
+            totalValues.protein,
+            totalValues.energy,
+            totalValues.carbohydrates,
+            totalValues.fats,
+            totalValues.sugar,
+          ],
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.5)",
+            "rgba(54, 162, 235, 0.5)",
+            "rgba(255, 206, 86, 0.5)",
+            "rgba(75, 192, 192, 0.5)",
+            "rgba(153, 102, 255, 0.5)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+          ],
           borderWidth: 1,
         },
       ],
@@ -60,6 +49,9 @@ function HealthCharts({ totalValues, total }) {
 
     const options = {
       scales: {
+        x: {
+          reverse: false,
+        },
         y: {
           beginAtZero: true,
         },
@@ -83,9 +75,9 @@ function HealthCharts({ totalValues, total }) {
 
   return (
     <div className="chart-container">
-      <h2>Total caloeies consumed today:{total}</h2>
+      <h2>Total calories consumed today: {total}</h2>
       <h3>Macros</h3>
-      {totalValues ? {} : <p>No total values available.</p>}
+      {!totalValues && <p>No total values available.</p>}
       <canvas ref={chartRef}></canvas>
     </div>
   );
