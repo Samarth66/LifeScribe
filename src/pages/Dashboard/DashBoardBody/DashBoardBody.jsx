@@ -5,6 +5,7 @@ import Header from "../../Header";
 import "./DashboardBody.css";
 import { Line } from "react-chartjs-2";
 import HealthLineChart from "./HealthLineChart";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const DashboardBody = () => {
   const [journalData, setJournalData] = useState([]);
@@ -23,12 +24,9 @@ const DashboardBody = () => {
 
   const fetchJournalEntries = async (id, days) => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/journal-entries",
-        {
-          params: { userId: id },
-        }
-      );
+      const response = await axios.get(`${apiBaseUrl}/journal-entries`, {
+        params: { userId: id },
+      });
 
       const allJournalData = response.data;
 
@@ -59,7 +57,7 @@ const DashboardBody = () => {
   const fetchCardCounts = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/count-cards-in-lists?userId=${userId}`
+        `${apiBaseUrl}/count-cards-in-lists?userId=${userId}`
       );
 
       const { todoCount, inProgressCount, completedCount } = response.data;
@@ -80,7 +78,7 @@ const DashboardBody = () => {
   const fetchHealthEntries = async (id, days) => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/health-dashboard-entries",
+        `${apiBaseUrl}/health-dashboard-entries`,
         {
           params: { userId: id },
         }
@@ -132,7 +130,7 @@ const DashboardBody = () => {
   const fetchSpendingEntries = async (id, days) => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/spending-dashboard-entries",
+        `${apiBaseUrl}/spending-dashboard-entries`,
         {
           params: { userId: id },
         }

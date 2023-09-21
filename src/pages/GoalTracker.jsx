@@ -9,6 +9,7 @@ import socket from "./socket";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import ChatBot from "./ChatBot/ChatBot";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const GoalTracker = () => {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -58,7 +59,7 @@ const GoalTracker = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/fetch-lists", {
+      const response = await axios.get(`${apiBaseUrl}/fetch-lists`, {
         params: {
           boardId: selectedBoardDetails.boardId,
         },
@@ -68,7 +69,7 @@ const GoalTracker = () => {
 
       await Promise.all(
         response.data.map(async (list) => {
-          const cards = await axios.get("http://localhost:8000/fetch-cards", {
+          const cards = await axios.get(`${apiBaseUrl}fetch-cards`, {
             params: {
               listId: list._id,
             },
@@ -108,7 +109,7 @@ const GoalTracker = () => {
     console.log(cardId, newParentListId);
 
     try {
-      await axios.post("http://localhost:8000/update-cards", {
+      await axios.post(`${apiBaseUrl}/update-cards`, {
         cardId,
         newParentListId,
       });

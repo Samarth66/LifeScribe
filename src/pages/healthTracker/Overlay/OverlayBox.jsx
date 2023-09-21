@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./OverlayBox.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const OverlayBox = ({
   isVisible,
@@ -81,10 +82,7 @@ const OverlayBox = ({
         nutrientData: nutrientData,
       };
 
-      const response = await axios.post(
-        "http://localhost:8000/add-meal",
-        mealData
-      );
+      const response = await axios.post(`${apiBaseUrl}/add-meal`, mealData);
 
       console.log("Meal added successfully:", response.data);
 

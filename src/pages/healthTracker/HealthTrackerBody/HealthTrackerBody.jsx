@@ -7,6 +7,7 @@ import "./HealthTrackerBody.css";
 import socket from "../../socket";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import ChatBot from "../../ChatBot/ChatBot";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const HealthTrackerBody = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const HealthTrackerBody = () => {
   const fetchEntryForDate = async (userId, date) => {
     try {
       console.log(userDetails, healthDate);
-      const response = await axios.post("http://localhost:8000/fetch-lists", {
+      const response = await axios.post(`${apiBaseUrl}/fetch-lists`, {
         userDetails,
         healthDate,
       });
@@ -90,7 +91,7 @@ const HealthTrackerBody = () => {
         userId: userId,
         date: date, // Send the date directly as 'date'
       };
-      const response = await axios.post("http://localhost:8000/create-entry", {
+      const response = await axios.post(`${apiBaseUrl}/create-entry`, {
         dataToSend,
       });
 

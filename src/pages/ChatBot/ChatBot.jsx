@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ChatBot.css";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const ChatBot = (props) => {
   const [userInput, setUserInput] = useState("");
@@ -25,7 +26,7 @@ const ChatBot = (props) => {
     const prompt = "" + props.prompt;
     console.log(prompt);
     try {
-      const response = await axios.post("http://localhost:8000/ask", {
+      const response = await axios.post(`${apiBaseUrl}/ask`, {
         prompt: prompt,
       });
 

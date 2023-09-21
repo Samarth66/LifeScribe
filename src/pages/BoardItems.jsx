@@ -14,6 +14,7 @@ function BoardItems(props) {
   const userId = useSelector((state) => state.userDetails.userDetails).id;
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
   const handleClick = () => {
     const jentry = {
@@ -27,7 +28,7 @@ function BoardItems(props) {
   const handleDeleteClick = async () => {
     // Add your delete logic here. For example:
     try {
-      await axios.delete("http://localhost:8000/delete-board-entry", {
+      await axios.delete(`${apiBaseUrl}/delete-board-entry`, {
         params: { boardId: props.id, userId: userId },
       });
 

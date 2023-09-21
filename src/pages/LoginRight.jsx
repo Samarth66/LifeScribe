@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import socket from "./socket";
 import { useDispatch, useSelector } from "react-redux";
 const initializeSocket = require("./socket");
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const LoginRight = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -29,11 +30,10 @@ const LoginRight = () => {
   };
 
   const submit = async (e) => {
+    console.log(apiBaseUrl);
     e.preventDefault();
 
-    let url = isLogin
-      ? "http://localhost:8000/"
-      : "http://localhost:8000/signup";
+    let url = isLogin ? `${apiBaseUrl}/` : `${apiBaseUrl}/signup`;
     let data = isLogin
       ? { email, password }
       : { id: uuidv4(), name, email, password };

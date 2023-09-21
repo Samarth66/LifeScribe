@@ -6,6 +6,7 @@ import axios from "axios";
 import Card from "./Card";
 import socket from "./socket";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"; // Import the components
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function GoalLists(props) {
   const [showInput, setShowInput] = useState(false);
@@ -40,7 +41,7 @@ function GoalLists(props) {
     try {
       const title = cardName;
       event.preventDefault();
-      await axios.post("http://localhost:8000/add-card", {
+      await axios.post(`${apiBaseUrl}/add-card`, {
         title,
         listId,
       });
@@ -51,7 +52,7 @@ function GoalLists(props) {
   }
 
   async function fetchCards() {
-    const response = await axios.get("http://localhost:8000/fetch-cards", {
+    const response = await axios.get(`${apiBaseUrl}/fetch-cards`, {
       params: { listId: listId },
     });
     setFetchedCards(response.data);

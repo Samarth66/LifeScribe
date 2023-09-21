@@ -6,6 +6,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import FoodList from "../healthTrackerFoodList/FoodList";
 import Chart from "chart.js/auto";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+const apiKey = process.env.REACT_APP_API_FOODAPI;
 
 const MealComponent = ({ title, meals }) => {
   const userId = useSelector((state) => state.userDetails.userDetails).id;
@@ -21,7 +23,7 @@ const MealComponent = ({ title, meals }) => {
 
   const fetchFoodList = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/fetch-meal", {
+      const response = await axios.get(`${apiBaseUrl}/fetch-meal`, {
         params: { healthId },
       });
       const data = response.data;
@@ -62,7 +64,7 @@ const MealComponent = ({ title, meals }) => {
   const deleteFoodItem = async (foodName, foodId) => {
     try {
       // Make an API call to delete the food item
-      await axios.delete("http://localhost:8000/delete-meal", {
+      await axios.delete(`${apiBaseUrl}/delete-meal`, {
         data: { userId, healthId, mealType: title.toLowerCase(), foodId },
       });
       console.log("del");
@@ -92,7 +94,7 @@ const MealComponent = ({ title, meals }) => {
         }}
         mealTitle={title}
         onSearch={(food) => {
-          const apiKey = "fkl0GhEvo5Fcd4opKmp2ej4bnPOkaPExKc9I103y";
+          console.log(apiKey, apiBaseUrl, "Dsadsa");
 
           const apiUrl = `https://api.nal.usda.gov/fdc/v1/search?api_key=${apiKey}&query=${food}`;
 

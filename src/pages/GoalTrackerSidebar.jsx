@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import BoardItems from "./BoardItems";
 import Header from "./Header";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function GoalTrackerSidebar() {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -19,7 +20,7 @@ function GoalTrackerSidebar() {
 
   const fetchBoardEntries = (id) => async (dispatch) => {
     try {
-      const entries = await axios.get("http://localhost:8000/fetch-sidebar", {
+      const entries = await axios.get(`${apiBaseUrl}fetch-sidebar`, {
         params: { userId: id }, // Pass the user ID as a query parameter
       });
       console.log("yeye fetched board", entries.data);
@@ -50,13 +51,10 @@ function GoalTrackerSidebar() {
     e.preventDefault();
 
     try {
-      const boardEntry = await axios.post(
-        "http://localhost:8000/goal-sidebar-board",
-        {
-          userId: id,
-          title: boardName,
-        }
-      );
+      const boardEntry = await axios.post(`${apiBaseUrl}/goal-sidebar-board`, {
+        userId: id,
+        title: boardName,
+      });
 
       dispatch({ type: "ADD_BOARD_ENTRIES", payload: boardEntry.data });
     } catch (e) {

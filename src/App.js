@@ -51,7 +51,6 @@ const App = () => {
           <Route path="/spending" element={<SpendingTracker />} />
         </Routes>
       </Router>
-      
     </div>
   );
 };

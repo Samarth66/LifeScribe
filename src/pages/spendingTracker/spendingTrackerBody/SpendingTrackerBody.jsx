@@ -8,6 +8,7 @@ import SpendingOverlayForm from "../SpendingOverlayForm/SpendingOverlayForm";
 import SpendingCard from "../spendingTrackerCard/SpendingCard";
 import ChatBot from "../../ChatBot/ChatBot";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const SpendingTrackerBody = () => {
   const dispatch = useDispatch();
@@ -32,15 +33,12 @@ const SpendingTrackerBody = () => {
 
   const fetchSpendEntries = async (userId, date) => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/fetch-spendings",
-        {
-          params: {
-            userId: userId,
-            date: date,
-          },
-        }
-      );
+      const response = await axios.get(`${apiBaseUrl}/fetch-spendings`, {
+        params: {
+          userId: userId,
+          date: date,
+        },
+      });
 
       console.log("status fetch", response.status, response.data);
 
@@ -71,7 +69,7 @@ const SpendingTrackerBody = () => {
     };
     try {
       const response = await axios.post(
-        "http://localhost:8000/create-spendings",
+        `${apiBaseUrl}/create-spendings`,
         dataToSend
       );
       console.log(response.status);
@@ -98,16 +96,13 @@ const SpendingTrackerBody = () => {
 
   const handleDeleteTransaction = async (transactionId) => {
     try {
-      const response = await axios.delete(
-        "http://localhost:8000/delete-transaction",
-        {
-          params: {
-            userId: userDetails,
-            date: SpendingDate,
-            id: transactionId,
-          },
-        }
-      );
+      const response = await axios.delete(`${apiBaseUrl}/delete-transaction`, {
+        params: {
+          userId: userDetails,
+          date: SpendingDate,
+          id: transactionId,
+        },
+      });
 
       if (response.status === 200) {
         console.log("Successfully deleted transaction");

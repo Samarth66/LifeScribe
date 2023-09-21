@@ -13,8 +13,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
-
-import { v4 as uuidv4 } from "uuid";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const Journal = () => {
   const [title, setTitle] = useState("");
@@ -67,7 +66,7 @@ const Journal = () => {
     const fetchEntries = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/journal-entries",
+          "https://lifescrive-backend.onrender.com/journal-entries",
           {
             params: { userId: id },
           }
@@ -113,7 +112,7 @@ const Journal = () => {
       const current = formatDate(date);
       console.log("date", current);
       try {
-        const newEntry = await axios.post("http://localhost:8000/journal", {
+        const newEntry = await axios.post(`${apiBaseUrl}/journal`, {
           id,
           title,
           description,
@@ -143,7 +142,7 @@ const Journal = () => {
     } else {
       try {
         e.preventDefault();
-        await axios.put("http://localhost:8000/journal-update", {
+        await axios.put(`${apiBaseUrl}/journal-update`, {
           journalId: selectedJournalDetails.id,
           updatedJournalDescription: description,
           updatedJournalTitle: title,

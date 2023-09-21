@@ -108,8 +108,8 @@ app.use("/", journalEntriesRoutes);
 app.use("/", goalTracker(io));
 app.use("/", healthTracker(io));
 app.use("/", spendingTracker(io));
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on http://0.0.0.0:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 // Export the 'io' object

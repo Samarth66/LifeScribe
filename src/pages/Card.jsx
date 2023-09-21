@@ -3,13 +3,13 @@ import "../css/Card.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 function Card(props) {
   const userId = useSelector((state) => state.userDetails.userDetails).id;
 
   const deleteCard = async () => {
     axios
-      .delete("http://localhost:8000/delete-cards", {
+      .delete(`${apiBaseUrl}/delete-cards`, {
         params: {
           id: props.id,
           userId: userId,

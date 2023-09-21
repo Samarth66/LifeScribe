@@ -3,6 +3,7 @@ import axios from "axios";
 import "./SpendingOverlayForm.css";
 import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const SpendingOverlayForm = ({ onClose, onTransactionAdded }) => {
   const [transactionName, setTransactionName] = useState("");
@@ -42,10 +43,11 @@ const SpendingOverlayForm = ({ onClose, onTransactionAdded }) => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/add-transaction",
-        { userDetails, SpendingDate, newTransactionData }
-      );
+      const response = await axios.post(`${apiBaseUrl}/add-transaction`, {
+        userDetails,
+        SpendingDate,
+        newTransactionData,
+      });
 
       if (response.status === 201) {
         console.log("Successfully created the transaction");

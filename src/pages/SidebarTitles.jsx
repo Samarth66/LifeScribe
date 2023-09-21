@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const SidebarTitles = (props) => {
   const user = useSelector((state) => state.userDetails.userDetails);
@@ -33,7 +34,7 @@ const SidebarTitles = (props) => {
     handleMenuClose();
     // Add your delete logic here. For example:
     try {
-      await axios.delete("http://localhost:8000/delete-journal-entry", {
+      await axios.delete(`${apiBaseUrl}/delete-journal-entry`, {
         params: {
           postId: props.id,
           userId: userId,
@@ -50,14 +51,11 @@ const SidebarTitles = (props) => {
 
   const fetchSelectedJournalDetails = async (id, dispatch) => {
     try {
-      const resp = await axios.get(
-        "http://localhost:8000/selected-journal-entry",
-        {
-          params: {
-            postId: id,
-          },
-        }
-      );
+      const resp = await axios.get(`${apiBaseUrl}/selected-journal-entry`, {
+        params: {
+          postId: id,
+        },
+      });
 
       console.log("fetched", resp.data);
 
