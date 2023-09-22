@@ -208,7 +208,7 @@ const DashboardBody = () => {
   };
 
   return (
-    <div>
+    <div className="dashboardd">
       <Header />
 
       <div className="dashboard-container">
