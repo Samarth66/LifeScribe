@@ -50,14 +50,29 @@ const HealthTrackerBody = () => {
       });
 
       if (response.status === 200) {
-        const entryData = response.data;
+        let entryData = response.data;
 
         if (!entryData) {
           await createEntryForDate(userDetails, healthDate);
-        } else {
+
+          // After creating, fetch the new entry
+          const newEntryResponse = await axios.post(
+            `${apiBaseUrl}/fetch-lists`,
+            {
+              userDetails,
+              healthDate,
+            }
+          );
+
+          // Update the entryData with the newly fetched entry
+          entryData = newEntryResponse.data;
+        }
+
+        // Check again if we got the entry (either initially or after creating & fetching)
+        if (entryData) {
           setEntry(entryData);
           setChartData(entryData.meals.total);
-          dispatch({ type: "SELECTED_HEALTH_ID", payload: response.data._id });
+          dispatch({ type: "SELECTED_HEALTH_ID", payload: entryData._id });
         }
       } else {
         console.error("Error fetching entry for date:", response.status);
@@ -115,7 +130,7 @@ const HealthTrackerBody = () => {
   });
 
   const toggleChatBot = () => {
-    const mealsData = entry.meals;
+    const mealsData = entry?.meals;
 
     // Convert the mealsData object into a string
     let mealsString =
@@ -155,7 +170,7 @@ const HealthTrackerBody = () => {
       </div>
       <div className="healthTrackerBodyy">
         <div className="healthMeals">
-          {entry && (
+          {entry && entry.meals && (
             <div className="healthMeal">
               <MealComponent title="breakfast" meals={entry.meals.breakfast} />
               <MealComponent title="lunch" meals={entry.meals.lunch} />

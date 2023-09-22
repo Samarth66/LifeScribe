@@ -3,6 +3,7 @@ import "../../../css/Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { useEffect } from "react";
 
 function HealthTrackerSidebar() {
   const userDetails = useSelector((state) => state.userDetails.userDetails);
@@ -23,6 +24,10 @@ function HealthTrackerSidebar() {
     // Convert Date to ISO string
     dispatch({ type: "SELECTED_DATE_DETAIL", payload: isoDateString });
   };
+
+  useEffect(() => {
+    handleDateClick(selectedDate);
+  }, []);
 
   const maxSelectableDate = new Date();
   maxSelectableDate.setHours(0, 0, 0, 0);
