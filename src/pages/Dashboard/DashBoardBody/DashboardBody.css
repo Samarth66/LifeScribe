@@ -1,6 +1,7 @@
 .dashboardd {
   width: 100%;
   display: flex;
+  justify-content: center;
 }
 .dashboard-container {
   margin-top: 90px;
@@ -107,14 +108,14 @@
 
 @media (max-width: 768px) {
   .dashboard-container {
-    margin-top: 100px;
-    padding: 10px;
+    margin-top: 20px; /* Example: Reduce top margin for mobile */
+    padding: 10px; /* Example: Reduce padding for mobile */
   }
 
   .dashboard-grid-1,
   .dashboard-grid-2 {
-    margin: 5px;
-    gap: 10px;
+    margin: 5px; /* Example: Adjust margins for mobile view */
+    gap: 10px; /* Example: Adjust gap for mobile view */
   }
 
   .dashboard-item {
@@ -123,7 +124,10 @@
 
   .journal-tracker,
   .goal-tracker {
+    /* Additional adjustments for specific elements */
     width: 100%;
-    height: auto;
+    height: auto; /* Make these elements take up full width on mobile */
   }
+
+  /* Adjust other styles as needed for mobile view */
 }
