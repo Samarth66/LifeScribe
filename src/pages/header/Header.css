@@ -154,6 +154,7 @@ header {
   .dropdown {
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
   }
 
   .dropdown-content {
@@ -167,5 +168,10 @@ header {
 
   .dropdown:hover .dropdown-content {
     display: flex;
+  }
+
+  .subheading {
+    display: none;
+    visibility: hidden;
   }
 }
