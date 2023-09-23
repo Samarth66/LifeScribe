@@ -63,7 +63,7 @@ const GoalTracker = () => {
 
       await Promise.all(
         response.data.map(async (list) => {
-          const cards = await axios.get(`${apiBaseUrl}fetch-cards`, {
+          const cards = await axios.get(`${apiBaseUrl}/fetch-cards`, {
             params: {
               listId: list._id,
             },
@@ -89,7 +89,9 @@ const GoalTracker = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (selectedBoardDetails) {
+      fetchData();
+    }
   }, [selectedBoardDetails]);
 
   const handleDragEnd = async (result) => {

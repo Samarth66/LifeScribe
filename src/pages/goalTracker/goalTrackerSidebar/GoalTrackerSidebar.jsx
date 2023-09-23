@@ -20,7 +20,7 @@ function GoalTrackerSidebar() {
 
   const fetchBoardEntries = (id) => async (dispatch) => {
     try {
-      const entries = await axios.get(`${apiBaseUrl}fetch-sidebar`, {
+      const entries = await axios.get(`${apiBaseUrl}/fetch-sidebar`, {
         params: { userId: id }, // Pass the user ID as a query parameter
       });
       const bentry = entries.data;
@@ -35,8 +35,6 @@ function GoalTrackerSidebar() {
   useEffect(() => {
     dispatch(fetchBoardEntries(id));
   }, [dispatch, id]);
-
-  useEffect(() => {}, [boardEntries]);
 
   function show() {
     setShowInput(true);
