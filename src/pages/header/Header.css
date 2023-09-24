@@ -20,6 +20,7 @@ header {
 .logo {
   font-size: 2rem;
   color: #4a4a4a;
+  margin-top: 10px;
 }
 
 .navigation a {
@@ -160,6 +161,7 @@ header {
   .hamburger {
     display: block;
     width: 40px;
+    color: #ffcccb;
     /* Show hamburger button on mobile screens */
   }
 
@@ -216,6 +218,9 @@ header {
 @media screen and (min-width: 768px) {
   .hamburger {
     display: none; /* Hide hamburger button on larger screens */
+    background-color: #ffcccb;
+    color: #ffcccb;
+    border: none !important;
   }
 
   .navigation {
