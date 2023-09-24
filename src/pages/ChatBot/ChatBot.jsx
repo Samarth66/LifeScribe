@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ChatBot.css";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const ChatBot = (props) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
-  const [isSubmitted, setIsSubmitted] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Initialize chat with a message when the component mounts
   useEffect(() => {
     setChatHistory([
       {
@@ -17,25 +19,26 @@ const ChatBot = (props) => {
         text: props.gptMessage,
       },
     ]);
-    setIsSubmitted(true);
-  }, []);
+  }, [props.gptMessage]);
 
   const sendToChatBot = async () => {
     const prompt = "" + props.prompt;
+    console.log("Send button clicked");
+    setIsSubmitted(true); // Start the loading process.
+    setUserInput(""); // Clear the chat message input.
+    setChatHistory([]); // Clear chat history.
 
     try {
       const response = await axios.post(`${apiBaseUrl}/ask`, {
         prompt: prompt,
       });
 
-      setChatHistory([...chatHistory, { type: "bot", text: response.data }]);
-
-      setUserInput("");
+      setChatHistory([{ type: "bot", text: response.data }]); // Set chat history to just the bot's response.
     } catch (error) {
       console.log("Error:", error);
     }
 
-    setIsSubmitted(false);
+    setIsSubmitted(false); // End the loading process.
   };
 
   const [showChatBot, setShowChatBot] = useState(true);
@@ -60,7 +63,9 @@ const ChatBot = (props) => {
             ))}
           </div>
           <div className="chat-footer">
-            {isSubmitted && (
+            {isSubmitted ? (
+              <div className="spinner"></div>
+            ) : (
               <button className="chat-send-button" onClick={sendToChatBot}>
                 Send
               </button>

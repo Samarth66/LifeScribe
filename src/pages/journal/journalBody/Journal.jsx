@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import "./Journal.css";
 import ChatBot from "../../ChatBot/ChatBot";
+import { useSidebar } from "../../../SidebarContext";
 
 import rake from "rake-js";
 
@@ -18,6 +19,7 @@ const Journal = () => {
   const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
+  const { showSidebar } = useSidebar();
 
   const userDetails = useSelector((state) => state.userDetails.userDetails);
   const selectedJournalDetails = useSelector(
@@ -53,6 +55,16 @@ const Journal = () => {
   }, [selectedJournalDetails]);
 
   const id = userDetails.id;
+
+  const getIconSize = () => {
+    const width = window.innerWidth;
+
+    if (width <= 768) {
+      return "60px";
+    } else {
+      return "130px";
+    }
+  };
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -150,9 +162,11 @@ const Journal = () => {
         <Header />
       </div>
       <div className="containerr">
-        <div className="journalSidebar">
-          <Sidebar onClearData={handleClearData} />
-        </div>
+        {showSidebar && (
+          <div className="journalSidebar">
+            <Sidebar onClearData={handleClearData} />
+          </div>
+        )}
 
         <div className="journalFormContainer">
           <form className="JournalForm">
@@ -182,12 +196,15 @@ const Journal = () => {
           </form>
           <div className="chat">
             <div>
-              <svg
+              <SmartToyOutlinedIcon
                 onClick={toggleChatBot}
-                style={{ position: "fixed", bottom: "20px", right: "20px" }}
-              >
-                {<SmartToyOutlinedIcon />}
-              </svg>
+                style={{
+                  position: "fixed",
+                  bottom: "20px",
+                  right: "20px",
+                  fontSize: getIconSize(),
+                }}
+              />
               {showChatBot && (
                 <ChatBot prompt={prompt} gptMessage={gptMessage} />
               )}

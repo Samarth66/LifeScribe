@@ -42,6 +42,16 @@ const HealthTrackerBody = () => {
     };
   }, [healthDate]);
 
+  const getIconSize = () => {
+    const width = window.innerWidth;
+
+    if (width <= 768) {
+      return "60px";
+    } else {
+      return "130px";
+    }
+  };
+
   const fetchEntryForDate = async (userId, date) => {
     try {
       const response = await axios.post(`${apiBaseUrl}/fetch-lists`, {
@@ -188,12 +198,16 @@ const HealthTrackerBody = () => {
         </div>
       </div>
       <div>
-        <svg
+        <SmartToyOutlinedIcon
           onClick={toggleChatBot}
-          style={{ position: "fixed", bottom: "20px", right: "20px" }}
-        >
-          {<SmartToyOutlinedIcon />}
-        </svg>
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            fontSize: getIconSize(),
+          }}
+        />
+
         {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
       </div>
     </div>

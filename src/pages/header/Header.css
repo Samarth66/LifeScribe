@@ -51,7 +51,7 @@ header {
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  gap: 20px; /* Adjust as needed */
+  gap: 10px; /* Adjust as needed */
 }
 
 .loginButtonn {
@@ -142,7 +142,27 @@ header {
   background-color: #ddd;
 }
 
+.hamburger {
+  font-size: 24px;
+  display: none; /* Hide by default on larger screens */
+}
+
+.navigation {
+  transform: translateX(-100%); /* Hide by default on mobile */
+  transition: transform 0.3s ease;
+}
+
+.navigation.show {
+  transform: translateX(0); /* Show when the "show" class is added */
+}
+
 @media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    width: 40px;
+    /* Show hamburger button on mobile screens */
+  }
+
   .navigation {
     display: none;
   }
@@ -158,12 +178,14 @@ header {
   }
 
   .dropdown-content {
+    top: 70px;
     display: none;
     flex-direction: column;
     position: absolute;
     background-color: #f9f9f9;
     width: 200px;
     z-index: 2;
+    font-family: "Roboto", sans-serif;
   }
 
   .dropdown:hover .dropdown-content {
@@ -173,5 +195,30 @@ header {
   .subheading {
     display: none;
     visibility: hidden;
+  }
+  header {
+    position: fixed;
+    top: 0;
+    box-sizing: border-box;
+
+    height: 100px;
+    padding: 20px;
+    padding-right: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    background-color: #ffcccb;
+    font-family: "Roboto", sans-serif;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .hamburger {
+    display: none; /* Hide hamburger button on larger screens */
+  }
+
+  .navigation {
+    transform: translateX(0); /* Always show sidebar on larger screens */
   }
 }

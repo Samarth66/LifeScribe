@@ -43,6 +43,7 @@
   border: none;
   padding: 10px;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .chat-message {
@@ -60,4 +61,26 @@
   background-color: #007bff;
   color: white;
   align-self: flex-end;
+}
+
+/* ChatBot.css */
+
+.spinner {
+  margin: 50px auto;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db;
+  animation: spin 2s linear infinite;
+  z-index: 1;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -5,7 +5,7 @@ import "../../../css/Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import BoardItems from "../sidebarBoardList/BoardItems";
-import Header from "../../header/Header";
+
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 function GoalTrackerSidebar() {
@@ -57,8 +57,6 @@ function GoalTrackerSidebar() {
 
   return (
     <div>
-      <Header />
-
       <div className="sidebar">
         <p className="name">
           {userDetails.name.charAt(0).toUpperCase() +

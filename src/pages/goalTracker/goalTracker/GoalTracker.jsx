@@ -5,10 +5,13 @@ import "./GoalTracker.css";
 import { useDispatch, useSelector } from "react-redux";
 import GoalLists from "../goalList/GoalLists";
 import axios from "axios";
+import { useSidebar } from "../../../SidebarContext";
 
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 import ChatBot from "../../ChatBot/ChatBot";
+import Header from "../../header/Header";
+
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 const GoalTracker = () => {
   const selectedBoardDetails = useSelector((state) => state.boardDetails.board);
@@ -19,6 +22,7 @@ const GoalTracker = () => {
   const [showChatBot, setShowChatBot] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [listData, setListData] = useState({});
+  const { showSidebar } = useSidebar();
 
   /* useEffect(() => {
     // Log a message when the socket is connected
@@ -49,6 +53,16 @@ const GoalTracker = () => {
     setPrompt(s);
 
     setShowChatBot(!showChatBot);
+  };
+
+  const getIconSize = () => {
+    const width = window.innerWidth;
+
+    if (width <= 768) {
+      return "60px";
+    } else {
+      return "130px";
+    }
   };
 
   const fetchData = async () => {
@@ -116,10 +130,14 @@ const GoalTracker = () => {
   };
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
+      <Header />
+
       <div className="GoalTrackerBody">
-        <div className="goalTrackerSidebar journalSidebar">
-          <GoalTrackerSidebar />
-        </div>
+        {showSidebar && (
+          <div className="goalTrackerSidebar journalSidebar">
+            <GoalTrackerSidebar />
+          </div>
+        )}
 
         <div className="lists">
           {fetchedList.map((data) => (
@@ -143,12 +161,16 @@ const GoalTracker = () => {
           ))}
         </div>
         <div>
-          <svg
+          <SmartToyOutlinedIcon
             onClick={toggleChatBot}
-            style={{ position: "fixed", bottom: "20px", right: "20px" }}
-          >
-            {<SmartToyOutlinedIcon />}
-          </svg>
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "20px",
+              fontSize: getIconSize(),
+            }}
+          />
+
           {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
         </div>
       </div>

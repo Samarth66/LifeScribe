@@ -24,4 +24,8 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .smart-toy-icon {
+    transform: scale(0.4);
+  }
 }

@@ -25,6 +25,7 @@
   background-color: #e0e0e0;
   border-radius: 30px;
   margin-bottom: 80px;
+  font-family: "Roboto", sans-serif;
 }
 
 .journalTitle {
@@ -33,8 +34,9 @@
   padding: 10px;
   font-size: 16px;
   margin-bottom: 10px;
-  font-family: "Pacifico", cursive;
+  font-family: "Roboto", sans-serif;
   border-radius: 20px;
+  font-weight: bold !important;
 }
 
 .journalBody {

@@ -11,7 +11,6 @@ import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const SpendingTrackerBody = () => {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.userDetails.userDetails);
   const SpendingDate = useSelector(
     (state) =>
@@ -22,11 +21,7 @@ const SpendingTrackerBody = () => {
   const [showAddTransactionForm, setShowAddTransactionForm] = useState(false);
 
   // Add state variables to manage form fields (transaction name, category, amount)
-  const [transactionName, setTransactionName] = useState("");
-  const [transactionCategory, setTransactionCategory] = useState("");
-  const [transactionAmount, setTransactionAmount] = useState("");
-  const [spendingData, SetSpendingData] = useState("");
-  const [showDialog, setShowDialog] = useState(true);
+
   const [prompt, setPrompt] = useState("");
   const [showChatBot, setShowChatBot] = useState(false);
   const gptMessage = "Click on send to analyze your todays spending";
@@ -52,6 +47,15 @@ const SpendingTrackerBody = () => {
       }
     } catch (error) {
       console.log("Error fetching spending data:", error);
+    }
+  };
+  const getIconSize = () => {
+    const width = window.innerWidth;
+
+    if (width <= 768) {
+      return "60px";
+    } else {
+      return "130px";
     }
   };
 
@@ -174,12 +178,15 @@ const SpendingTrackerBody = () => {
         )}
       </div>
       <div>
-        <svg
+        <SmartToyOutlinedIcon
           onClick={toggleChatBot}
-          style={{ position: "fixed", bottom: "20px", right: "20px" }}
-        >
-          {<SmartToyOutlinedIcon />}
-        </svg>
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            fontSize: getIconSize(),
+          }}
+        />
         {showChatBot && <ChatBot prompt={prompt} gptMessage={gptMessage} />}
       </div>
     </div>

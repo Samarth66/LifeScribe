@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import socket from "../socket";
+import { useSidebar } from "../../SidebarContext";
 
 const Header = () => {
   const location = useLocation();
@@ -22,12 +23,18 @@ const Header = () => {
     navigate("/");
   };
 
+  const { toggleSidebar } = useSidebar();
+  const [showSidebar, setShowSidebar] = useState(true);
+
   return (
     <div className="hd">
       <header>
+        <button className="hamburger" onClick={toggleSidebar}>
+          ☰
+        </button>
         <h2 className="logo">LifeScribe</h2>
         <h2 className="subheading">{currentPageTitle}</h2>
-        <nav className="navigation">
+        <nav className={`navigation ${showSidebar ? "show" : ""}`}>
           <Link to="/journal">Journal</Link>
           <Link to="/goal">Goal Tracker</Link>
           <Link to="/health">Health Tracker</Link>
