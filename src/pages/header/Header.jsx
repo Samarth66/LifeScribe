@@ -19,6 +19,7 @@ const Header = () => {
   const currentPageTitle = pageTitles[location.pathname] || "";
 
   const handleLogout = () => {
+    localStorage.removeItem("userTocken");
     socket.disconnect();
     navigate("/");
   };

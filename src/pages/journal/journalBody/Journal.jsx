@@ -12,6 +12,7 @@ import rake from "rake-js";
 
 import SmartToyOutlinedIcon from "@mui/icons-material/SmartToyOutlined";
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+const token = localStorage.getItem('userToken');
 
 const Journal = () => {
   const [title, setTitle] = useState("");
@@ -72,8 +73,14 @@ const Journal = () => {
         const response = await axios.get(
           "https://lifescrive-backend.onrender.com/journal-entries",
           {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        
             params: { userId: id },
-          }
+         
+        }
+          
         );
         setUpdateButton(0);
 
